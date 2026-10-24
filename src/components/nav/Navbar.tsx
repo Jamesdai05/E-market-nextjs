@@ -38,10 +38,13 @@ const Navbar = () => {
     const pathname = usePathname();
 
     return (
-        <header className="sticky top-0 z-10 w-full border-b bg-sky-600 text-white shadow-md shadow-sky-900/10">
+        <header
+            aria-label="Main"
+            className="sticky top-0 z-50 w-full border-b bg-nav text-nav-foreground shadow-md shadow-nav-accent/20"
+        >
             <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
                 <Link href="/" className="flex justify-center items-center">
-                    <span className="flex size-10 items-center justify-center rounded-md bg-nav-foreground text-nav">
+                    <span className="flex size-10 items-center justify-center rounded-md bg-nav text-nav-foreground">
                         <ShoppingBasket />
                     </span>
                     Mini-Mart
@@ -65,11 +68,10 @@ const Navbar = () => {
                                             }
                                             render={<Link href={link.href} />}
                                             className={cn(
-                                                "rounded-md px-4 py-2 text-white transion-color",
-                                                "hover:bg-white hover:text-sky-500",
-                                                "focus-visible:bg-white focus-visible:text-sky-500",
-                                                active &&
-                                                    "bg-sky-500 text-sky-500",
+                                                "rounded-md px-3 py-2 font-medium text-nav-foreground transition-colors",
+                                                "hover:bg-nav-accent hover:text-nav-foreground",
+                                                "focus-visible:text-nav-foreground focus:bg-nav-accent",
+                                                "aria-[current=page]:bg-nav-accent! data-active:text-nav-foreground",
                                             )}
                                         >
                                             {link.label}
@@ -87,7 +89,7 @@ const Navbar = () => {
                         href="/login"
                         className={cn(
                             buttonVariants({ variant: "outline" }),
-                            "border-none bg-sky-500 text-white hover:bg-white hover:text-sky-500",
+                            "bg-nav text-nav-foreground hover:bg-nav-foreground hover:text-nav",
                         )}
                     >
                         Login
@@ -96,7 +98,7 @@ const Navbar = () => {
                         href="/register"
                         className={cn(
                             buttonVariants({ variant: "outline" }),
-                            "border-none bg-sky-500 text-white hover:bg-white hover:text-sky-500",
+                            "bg-nav text-nav-foreground hover:bg-nav-foreground hover:text-nav",
                         )}
                     >
                         Register
