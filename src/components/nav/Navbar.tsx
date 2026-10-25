@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import NavigationLinks from "./NavigationLinks";
 import Cart from "./Cart";
+import Theme from "./Theme"
 
 // for mobile style
 const navLinkClass =
@@ -60,6 +61,7 @@ const Navbar = () => {
 
                 {/* desktop authentication */}
                 <div className="hidden shirnk-0 items-center gap-2 max-w-md md:flex">
+                    <Theme />
                     <NavigationLinks links={navLinks} pathname={pathname} />
                     <Cart />
                     <Link
