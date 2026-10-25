@@ -4,6 +4,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "../ui/button";
 import { Menu, ShoppingBasket } from "lucide-react";
+import { isPathActive } from "./NavigationLinks";
 
 import SearchComponent from "./SearchComponent";
 
@@ -18,7 +19,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import NavigationLinks from "./NavigationLinks";
 import Cart from "./Cart";
-import Theme from "./Theme"
+import Theme from "./Theme";
 
 // for mobile style
 const navLinkClass =
@@ -86,7 +87,8 @@ const Navbar = () => {
                     </Link> */}
                 </div>
                 {/* mobile Navigation */}
-                <div className="md:hidden">
+                <div className="flex items-center gap-2 md:hidden">
+                    <Theme />
                     <Sheet open={open} onOpenChange={setOpen}>
                         <SheetTrigger
                             render={
@@ -118,6 +120,21 @@ const Navbar = () => {
                             </SheetHeader>
 
                             <div className="flex mt-4 flex-col gap-2 px-2">
+                                {navLinks.map((link) => {
+                                    const active = isPathActive(
+                                        pathname,
+                                        link.href,
+                                    );
+                                    return (
+                                        <Link
+                                            key={link.href}
+                                            href={link.href}
+                                            className={cn(navLinkClass,active && navLinkActiveClass)}
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    );
+                                })}
                                 <Link href="/login" className={authButtonClass}>
                                     Login
                                 </Link>

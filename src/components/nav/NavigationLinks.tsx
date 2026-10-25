@@ -16,6 +16,12 @@ type NavLink = {
     href: string;
 };
 
+export const isPathActive = (pathname: string, href: string) => {
+    return href === "/"
+        ? pathname === "/"
+        : pathname === href || pathname.startsWith(href);
+};
+
 const NavigationLinks = ({
     links,
     pathname,
@@ -23,11 +29,7 @@ const NavigationLinks = ({
     links: NavLink[];
     pathname: string;
 }) => {
-    const isPathActive = (pathname: string, href: string) => {
-        return href === "/"
-            ? pathname === "/"
-            : pathname === href || pathname.startsWith(href);
-    };
+
 
     // const navLinks = [
     //     { label: "Home", href: "/" },

@@ -19,7 +19,7 @@ const Theme = () => {
             onClick={toggleTheme}
             className={navIconButtonClass}
         >
-            {theme === "dark" ? <Sun /> : <Moon />}
+            {theme === "dark" ? <Moon /> : <Sun />}
         </Button>
     );
 };
