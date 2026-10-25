@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -48,7 +48,7 @@ const NavigationLinks = ({
                         />
                     }
                 >
-                    Menu
+                    <Menu />
                     <ChevronDown className="size-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="max-w-40">
