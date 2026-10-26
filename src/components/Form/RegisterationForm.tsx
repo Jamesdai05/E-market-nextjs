@@ -1,15 +1,21 @@
+"use client"
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import PasswordInput from "../passwordInput/PasswordInput";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useActionState } from "react";
+useActionState
+
 
 const RegisterationForm = () => {
+    const []
 
-  
 
     return (
-        <form className="flex flex-col items-center justify-center gap-4">
+        <form action="" className="flex flex-col items-center justify-center gap-4">
             <div className="form-group">
                 <Label htmlFor="name">Name</Label>
                 <Input
@@ -44,12 +50,12 @@ const RegisterationForm = () => {
                 />
             </div>
             <div className="form-group">
-                <Label htmlFor="confirmpassword">Confirm Password</Label>
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
                 <PasswordInput
-                    name="confirmpassword"
+                    name="confirmPassword"
                     placeholder="Confirm the password"
-                    id="confirmpassword"
-                    autoComplete="confirmpassword"
+                    id="confirmPassword"
+                    autoComplete="confirmPassword"
                     className="w-full min-w-[20em] bg-input p-2"
                     required
                 />
