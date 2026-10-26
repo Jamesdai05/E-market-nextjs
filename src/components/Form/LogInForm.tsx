@@ -8,7 +8,7 @@ const LogInForm = () => {
     return (
         <form
             action=""
-            className="flex flex-col items-center justify-center gap-4"
+            className="flex flex-col justify-center gap-4"
         >
             <div className="form-group">
                 <Label htmlFor="email">Email</Label>

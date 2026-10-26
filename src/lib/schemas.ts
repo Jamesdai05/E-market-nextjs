@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const loginSchema = z.object({
-    emai: z.email(),
+    email: z.email(),
     password: z.string().min(8, "Length of the password must be at least 8."),
 });
 

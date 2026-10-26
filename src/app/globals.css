@@ -153,7 +153,7 @@
     }
 
     .form-group {
-        @apply flex flex-col justify-center gap-2;
+        @apply flex flex-col gap-2;
     }
 }
 
