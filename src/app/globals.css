@@ -141,3 +141,14 @@
 /* @utility search-button {
   @apply shrink-0 bg-nav-accent text-nav-foreground hover:bg-nav-foreground hover:text-nav;
 } */
+@layer components{
+  .form-container{
+    @apply flex flex-col justify-center items-center px-4 py-8;
+    min-height:calc(100vh - 64px);
+  }
+  .formgroup{
+    @apply flex flex-col justify-center gap-1;
+  }
+}
+
+

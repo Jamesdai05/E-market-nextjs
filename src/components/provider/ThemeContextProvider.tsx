@@ -22,7 +22,7 @@ const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
     const [theme, setTheme] = useState<Theme>("light");
 
     useEffect(() => {
-        document.documentElement.classList.toggle("dark", theme === "light");
+        document.documentElement.classList.toggle("dark", theme === "dark");
     }, [theme]);
 
     const toggleTheme = () =>
