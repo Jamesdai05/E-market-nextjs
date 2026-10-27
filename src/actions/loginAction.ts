@@ -11,7 +11,7 @@ export type LoginState = {
     errors?: Record<string, string[]>;
 };
 
-export const registration = async (
+export const login = async (
   prevState: LoginState,
     formData: FormData,
 ): Promise<LoginState> => {
@@ -41,7 +41,7 @@ export const registration = async (
         });
 
         return {
-            message: "login successfully!",
+            message: "Login successfully!",
             success: true,
         };
     } catch (error) {
