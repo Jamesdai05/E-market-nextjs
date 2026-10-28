@@ -2,18 +2,23 @@ import CarouselComp from "@/components/Carousel/CarouselComp";
 import { Suspense } from "react";
 import Message from "@/components/global/Message";
 import ProductContent from "@/components/productContents/ProductContents";
+import SectionTitle from "@/components/sectionTitle/SectionTitle";
 
 const ProductsPage = () => {
-
     // if (!allProducts.length)
     //     return <Message>No products available now.</Message>;
 
     return (
-        <div className="flex flex-col max-w-7xl mx-auto gap-10">
-            <CarouselComp />
-            <Suspense fallback={<Message>Loading products...</Message>}>
-                <ProductContent />
-            </Suspense>
+        <div className="flex flex-col max-w-7xl mx-auto gap-6">
+            <div className="flex justify-center items-center w-full mb-6">
+                <CarouselComp />
+            </div>
+            <div className="products">
+                <SectionTitle text="popular products" />
+                <Suspense fallback={<Message>Loading products...</Message>}>
+                    <ProductContent />
+                </Suspense>
+            </div>
         </div>
     );
 };

@@ -7,6 +7,8 @@ const ProductContent =async() => {
 
   const allProducts = await fetchAllProducts();
 
+  console.log(allProducts);
+
   if(allProducts.length===0)return <Messsage>No products available found.</Messsage>
 
   return (
