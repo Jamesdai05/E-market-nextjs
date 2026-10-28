@@ -67,7 +67,7 @@
     },
     {
         "name": "Xiaomi Redmi Pad Pro (8GB RAM + 256GB Storage)",
-        "image": "/images/xiaomi.jpg",
+        "image": "/images/xiaomi.png",
         "description": "Xiaomi Redmi Pad Pro WiFi (8GB RAM + 256GB Storage)",
         "brand": "Xiao Mi",
         "category": "Electronics",
@@ -78,7 +78,7 @@
     },
     {
         "name": "Logitech MX Master 3S - Wireless Performance Mouse",
-        "image": "/images/logi_mouse.jpg",
+        "image": "/images/logiMouse.png",
         "description": "Logitech MX Master 3S - Wireless Performance Mouse with Ultra-Fast Scrolling, Ergo, 8K DPI, Track on Glass, Quiet Clicks, USB-C, Bluetooth, Windows, Linux, Chrome-Graphite",
         "brand": "Logitech",
         "category": "Electronics",
@@ -89,7 +89,7 @@
     },
     {
         "name": "Logitech M331 SILENT PLUS Wireless Mouse with Nano Receiver",
-        "image": "/images/logiMouse.jpg",
+        "image": "/images/lg_mouse.jpg",
         "description": "SPECS & DETAILS Dimensions Mouse (height x width x depth): 105.4 mm x 67.9 mm x 38.4 mm Weight: 91.0 g Nano Receiver (Height x Width x Depth): 14.4 x 18.7 x 6.1 mm Weight: 1.8 g System Requirements Windows 10 or later, Windows 8, Windows RT, Windows 7 Mac OS X 10.5 or later Chrome OS Linux Kernel 2.6+2 USB connection: available USB port required. Technical Specifications Connection Type: 2.4GHz wireless connection Wireless range: 10 meters Connect / Power: Yes, on/off switch Battery Details: 1 x AA Battery life: 24 months* *Battery life may vary based on user and computing DPI (Min/Max): 1000± Sensor technology: Logitech Advanced Optical Tracking Sensor resolution: 1000 dpi Scroll Wheel: Yes, 2D, optical Number of buttons: 3 Standard and Special Buttons: Middle click Package Contents Mouse Nano receiver 1 AA battery (pre-installed) User documentation",
         "brand": "Logitech",
         "category": "Electronics",
@@ -137,7 +137,7 @@
 
     {
         "name": "Amazfit T-Rex 3 Military Smart Watch 48mm",
-        "image": "/images/Watch-2.jpg",
+        "image": "/images/watch3.png",
         "description": "The Amazfit T-Rex 3 tactical smart watch is designed for the adventurous individual seeking durability and versatility in their smartwatch. This smartwatch for men and women combines ruggedness with advanced technology, making it an ideal choice for outdoor enthusiasts. With a 48mm military-grade build, it resists extreme temperatures from 158°F to -22°F and is water-resistant up to 328 feet, perfect for surfing and freediving. Amazfit T-Rex 3 caters to a wide array of users, providing an extensive suite of functions and an authoritative design for any adventurer. ",
         "brand": "AMAZFIT",
         "category": "Electronics",
@@ -145,5 +145,17 @@
         "countInStock": 6,
         "rating": 4.4,
         "numReviews": 458
+    },
+
+    {
+        "name": "Garmin vívoactive® 6",
+        "image": "/images/gamin-vivoactive6.jpg",
+        "description": "Smartwatch pairs a bright AMOLED display with up to 11 days of battery life in smartwatch mode. Body Battery energy monitoring shows when you’re charged up or need rest, using insights from your sleep, stress and workouts. You’ll get a nightly sleep score with personalized coaching and tips, plus HRV status to track recovery, and a smart wake alarm that gently vibrates at the optimal time. More than 80 built-in indoor and GPS sports apps cover walking, running, cycling, HIIT, swimming, golf and more, while daily suggested workouts keep you motivated. Health features include wrist-based heart rate, a morning report, fitness age, stress tracking, menstrual cycle and pregnancy tracking, and meditation. All health data is intended to be a close estimation of the metrics tracked.",
+        "brand": "Garmin",
+        "category": "Electronics",
+        "price": 461.99,
+        "countInStock": 30,
+        "rating": 4.4,
+        "numReviews": 3806
     }
 ]
