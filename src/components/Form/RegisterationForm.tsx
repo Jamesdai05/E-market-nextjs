@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import PasswordInput from "../passwordInput/PasswordInput";
 import Link from "next/link";
 import { useActionState, useEffect } from "react";
-import { registration } from "@/actions/registration";
-import { type RegistrationState } from "@/actions/registration";
+import { registration } from "@/utils/actions/registration";
+import { type RegistrationState } from "@/utils/actions/registration";
 import Alert from "../error/Alert";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -22,20 +22,20 @@ const RegisterationForm = () => {
     const [state, formAction, isPending] = useActionState(
         registration,
         initalRegistrationState,
-		);
+    );
 
-	const router = useRouter();
+    const router = useRouter();
 
     useEffect(() => {
         // direct return to prevent showing the message
         if (!state.message) return;
         if (state.success) {
-					toast.success("Account has been successfully created!");
-					router.replace("/login")
+            toast.success("Account has been successfully created!");
+            router.replace("/login");
         } else {
             toast.error(state.message);
         }
-    },[state]);
+    }, [state]);
 
     return (
         <form
