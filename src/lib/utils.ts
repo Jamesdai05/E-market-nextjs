@@ -13,3 +13,5 @@ export const Role = {
 } as const;
 
 export type Role=(typeof Role)[keyof typeof Role]
+
+export const currencyFormatter=new Intl.NumberFormat("en-SG",{style:"currency",currency:"SGD"});

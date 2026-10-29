@@ -6,10 +6,20 @@ import SectionTitle from "@/components/sectionTitle/SectionTitle";
 
 
 
-export default function Home() {
-    // const products = await fetchTopProducts();
 
-    // console.log(products);
+export default function Home() {
+  // console.log("Home page rendering!");
+
+
+  // return (
+  //   <main>
+  //     <Hero />
+  //     <SectionTitle text="Featured products" />
+  //     <Suspense fallback={<Loader />}>
+  //       <FeaturedProducts />
+  //     </Suspense>
+  //   </main>
+  // )
 
     return (
         <div className="flex flex-col flex-1 items-center justify-center font-sans bg-background">

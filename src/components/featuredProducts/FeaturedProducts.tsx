@@ -1,19 +1,26 @@
 import { fetchTopProducts } from "@/utils/products";
 import ProductList from "../ProductList/ProductList";
+// import SectionTitle from "@/components/sectionTitle/SectionTitle";
+import {fetchAllProducts} from "@/utils/actions/productActions"
 
 
 
 const FeaturedProducts = async () => {
 
-  const featuredProducts = await fetchTopProducts();
+  console.log("FeaturedProducts rendering");
 
-  // console.log(featuredProducts);
-  if(featuredProducts.length===0) return <p>No featured products found.</p>
+  const products = await fetchTopProducts();
+  // const products = await fetchAllProducts();
+
+  console.log("Count of FeaturedProducts",products.length);
+
 
   return (
-    <div className="grid featured-products">
-      <ProductList products={featuredProducts} />
-    </div>
-  )
+      <div className="flex flex-col mx-auto">
+        {/* <SectionTitle text="Featured Product" /> */}
+        <ProductList products={products} />
+      </div>
+  );
 }
+
 export default FeaturedProducts

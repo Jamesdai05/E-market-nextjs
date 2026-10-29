@@ -5,8 +5,6 @@ import ProductContent from "@/components/productContents/ProductContents";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
 
 const ProductsPage = () => {
-    // if (!allProducts.length)
-    //     return <Message>No products available now.</Message>;
 
     return (
         <div className="flex flex-col max-w-7xl mx-auto gap-6">

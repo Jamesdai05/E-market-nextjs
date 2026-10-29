@@ -1,5 +1,5 @@
 import { fetchAllProducts } from "@/utils/actions/productActions";
-import Messsage from "../global/Message";
+import Message from "../global/Message";
 import ProductList from "../ProductList/ProductList";
 
 
@@ -7,9 +7,7 @@ const ProductContent =async() => {
 
   const allProducts = await fetchAllProducts();
 
-  console.log(allProducts);
-
-  if(allProducts.length===0)return <Messsage>No products available found.</Messsage>
+  if(allProducts.length===0)return <Message>No products available found.</Message>
 
   return (
 

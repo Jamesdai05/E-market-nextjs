@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/nav/Navbar";
 import ThemeContextProvider from "@/components/provider/ThemeContextProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { Suspense } from "react";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -29,7 +30,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <body className="min-h-full flex flex-col">
                 <ThemeContextProvider>
                     <Toaster position="top-right" richColors />
-                    <Navbar />
+                    <Suspense fallback={<div className="h-16" />}>
+                        <Navbar />
+                    </Suspense>
                     {children}
                 </ThemeContextProvider>
             </body>
