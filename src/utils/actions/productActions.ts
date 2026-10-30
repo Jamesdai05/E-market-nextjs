@@ -20,7 +20,7 @@ export const fetchAllProducts = async () => {
 };
 
 export const fetchSingleProduct = async (id: string) => {
-    console.count("Prisma findUnique called");
+    // console.count("Prisma findUnique called");
     try {
         const product = await prisma.product.findUnique({
             where: {

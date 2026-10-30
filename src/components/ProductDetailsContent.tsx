@@ -13,7 +13,6 @@ const ProductDetailsContent = async ({
 }: {
     params: Promise<{ id: string }>;
 }) => {
-    console.log("ProductContent rendering");
     const { id } = await params;
     // console.log("Fetching product:", id);
 
