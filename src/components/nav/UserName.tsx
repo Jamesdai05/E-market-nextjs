@@ -27,7 +27,7 @@ const UserName = ({ name }: { name: string }) => {
         <DropdownMenu>
             <DropdownMenuTrigger
                 render={<Button variant="outline">{name}</Button>}
-                className="text-nav hover:underline hover:font-bold hover:text-nav"
+                className="text-nav hover:underline hover:font-bold hover:bg-accent"
             />
             <DropdownMenuContent className="w-40" align="start">
                 <DropdownMenuGroup>
