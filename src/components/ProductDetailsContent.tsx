@@ -1,12 +1,12 @@
 import { fetchSingleProduct } from "@/utils/actions/productActions";
 import { Separator } from "@/components/ui/separator";
-import { Card } from "@/components/ui/card";
 import ProductPurchase from "./ProductPurchaseCard/ProductPurchase";
 // import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { currencyFormatter } from "@/lib/utils";
 import Rating from "./Rating/Rating";
+// import
 
 const ProductDetailsContent = async ({
     params,
@@ -23,12 +23,8 @@ const ProductDetailsContent = async ({
         notFound();
     }
 
-    const handleAddToCart = () => {
-        console.log("Add to cart");
-    };
-
     return (
-        <div className="max-w-7xl mx-auto p-6 grid grid-cols-12 gap-8 min-h-[50dvh] mt-8">
+        <div className="items-center p-6 grid grid-cols-12 gap-8 min-h-[50dvh] mt-8">
             {/* image */}
             <div className="col-span-12 md:col-span-5">
                 <Image
@@ -49,7 +45,7 @@ const ProductDetailsContent = async ({
                 <Rating rating={product.rating} reviews={product.numReviews} />
                 <Separator />
                 <p className="text-2xl font-semibold">
-                    {currencyFormatter.format(Number(product.price))}
+                    {currencyFormatter.format(product.price)}
                 </p>
                 <Separator />
                 <div className="flex flex-col gap-2">
@@ -62,7 +58,8 @@ const ProductDetailsContent = async ({
             {/* Bills */}
             <div className="col-span-12 md:col-span-3">
                 <ProductPurchase
-                    price={Number(product.price)}
+                    productId={product.id}
+                    price={product.price}
                     countInStock={product.countInStock}
                 />
             </div>

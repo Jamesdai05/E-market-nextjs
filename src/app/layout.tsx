@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/nav/Navbar";
 import ThemeContextProvider from "@/components/provider/ThemeContextProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { Suspense } from "react";
+import NavBarServer from "@/components/nav/NavBarServer";
+
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -22,6 +23,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+
+
     return (
         <html
             lang="en"
@@ -31,7 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 <ThemeContextProvider>
                     <Toaster position="top-right" richColors />
                     <Suspense fallback={<div className="h-16" />}>
-                        <Navbar />
+                        <NavBarServer />
                     </Suspense>
                     {children}
                 </ThemeContextProvider>

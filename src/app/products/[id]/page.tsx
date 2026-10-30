@@ -5,9 +5,9 @@ type ProductDetailsPageProps = {
     params: Promise<{ id: string }>;
 };
 
-const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
+const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
   return (
-      <div className="flex flex-col max-w-7xl justify-center items-center mx-auto border">
+      <div className="flex flex-col max-w-7xl justify-center items-center mx-auto">
           <Suspense fallback={<p>Loading...</p>}>
               <ProductDetailsContent params={params} />
           </Suspense>

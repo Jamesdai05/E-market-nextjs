@@ -19,6 +19,11 @@ export const registrationSchema = z
         path: ["confirmPassword"],
     });
 
+export const addToCartSchema = z.object({
+    productId: z.string().min(1),
+    qty: z.number().int().min(1).max(10),
+});
+
 export type loginInput = z.infer<typeof loginSchema>
 
 export type registrationInput = z.infer<typeof registrationSchema>;

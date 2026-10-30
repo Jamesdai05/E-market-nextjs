@@ -27,6 +27,7 @@ const LogInForm = () => {
         if (state.success) {
             toast.success("Login successfully");
             router.replace("/profile");
+            router.refresh();
         } else {
             toast.error(state.message);
         }
@@ -63,7 +64,8 @@ const LogInForm = () => {
                     className="w-full min-w-[20em] bg-input text-foreground p-2"
                     placeholder="Enter the password"
                     aria-label="password"
-                    autoComplete="password"
+                    id="password"
+                    autoComplete="current-password"
                     name="password"
                 />
             </div>
@@ -72,9 +74,10 @@ const LogInForm = () => {
             )}
             <Button
                 type="submit"
+                disabled={isPending}
                 className="w-full mt-4 bg-sky-400 font-bold text-nav-foreground hover:bg-nav-foreground hover:text-nav"
             >
-                Submit
+                {isPending ? "Logging in" : "Log In"}
             </Button>
             <div className="link flex justify-center">
                 <p className="text-sm">

@@ -20,6 +20,7 @@ import { useState } from "react";
 import NavigationLinks from "./NavigationLinks";
 import Cart from "./Cart";
 import Theme from "./Theme";
+import UserName from "./UserName";
 
 // for mobile style
 const navLinkClass =
@@ -35,9 +36,10 @@ const navLinks = [
     { label: "Home", href: "/" },
     { label: "Products", href: "/products" },
     { label: "About", href: "/about" },
+    { label: "Profile", href: "/profile" },
 ];
 
-const Navbar = () => {
+const Navbar = ({ name }: { name: string | null }) => {
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
 
@@ -61,20 +63,24 @@ const Navbar = () => {
                 <SearchComponent className="hidden text-lg mx-auto max-w-md md:flex" />
 
                 {/* desktop authentication */}
-                <div className="hidden shirnk-0 items-center gap-2 max-w-md md:flex">
+                <div className="hidden shrink-0 items-center gap-2 max-w-md md:flex">
                     <Theme />
                     <NavigationLinks links={navLinks} pathname={pathname} />
                     <Cart />
-                    <Link
-                        href="/login"
-                        className={cn(
-                            buttonVariants({ variant: "outline" }),
-                            "bg-nav text-nav-foreground border-nav-foreground/50",
-                            "hover:bg-nav-foreground hover:text-nav",
-                        )}
-                    >
-                        Login
-                    </Link>
+                    {name ? (
+                        <UserName name={name} />
+                    ) : (
+                        <Link
+                            href="/login"
+                            className={cn(
+                                buttonVariants({ variant: "outline" }),
+                                "bg-nav text-nav-foreground border-nav-foreground/50",
+                                "hover:bg-nav-foreground hover:text-nav",
+                            )}
+                        >
+                            Login
+                        </Link>
+                    )}
                     {/* <Link
                         href="/register"
                         className={cn(
@@ -107,9 +113,9 @@ const Navbar = () => {
                             // to style the sheet button
                             className={cn(
                                 "bg-nav text-nav-foreground border-nav-accent",
-                                "[&_[data-slot=sheet-close]]:text-nav-foreground",
-                                "[&_[data-slot=sheet-close]:hover]:bg-nav-accent",
-                                "[&_[data-slot=sheet-close]:hover]:text-nav-foreground",
+                                "[&_data-[slot=sheet-close]]:text-nav-foreground",
+                                "[&_data-[slot=sheet-close]:hover]:bg-nav-accent",
+                                "[&_data-[slot=sheet-close]:hover]:text-nav-foreground",
                             )}
                         >
                             <SheetHeader>
@@ -129,7 +135,10 @@ const Navbar = () => {
                                         <Link
                                             key={link.href}
                                             href={link.href}
-                                            className={cn(navLinkClass,active && navLinkActiveClass)}
+                                            className={cn(
+                                                navLinkClass,
+                                                active && navLinkActiveClass,
+                                            )}
                                         >
                                             {link.label}
                                         </Link>
