@@ -1,8 +1,9 @@
 "use server";
 
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { auth } from "@/lib/auth";
+// import { auth } from "@/lib/auth";
+import { getCurrentSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { addToCartSchema } from "@/lib/schemas";
 
@@ -23,13 +24,18 @@ export const addToCart = async (
     }
 
     // the user id comes from the session cookie, never from the client
-    const session = await auth.api.getSession({ headers: await headers() });
+    // const session = await auth.api.getSession({ headers: await headers() });
+    const session = await getCurrentSession();
     if (!session) {
-        return { success: false, message: "Please log in to add items to your cart" };
+        return {
+            success: false,
+            message: "Please log in to add items to your cart",
+        };
     }
 
-  try {
-      // find the product whether and validate it.
+    try {
+        // find the product whether and validate it.
+        // const userId = session.user.id;
         const product = await prisma.product.findUnique({
             where: { id: result.data.productId },
             select: { id: true, countInStock: true },
@@ -39,37 +45,58 @@ export const addToCart = async (
             return { success: false, message: "Product not found" };
         }
 
-        // create a cart or update it.
+        // create a cart or update it under the userId
         const cart = await prisma.cart.upsert({
             where: { userId: session.user.id },
             update: {},
             create: { userId: session.user.id },
         });
 
+        // find the cart and its productId
+        const cartItemKey = { cartId: cart.id, productId: product.id };
+
         const existingItem = await prisma.cartItem.findUnique({
-            where: { cartId_productId: { cartId: cart.id, productId: product.id } },
+            where: { cartId_productId: cartItemKey },
         });
 
         // adding the same product again increases the quantity instead of creating a new row
-        const newQty = (existingItem?.quantity ?? 0) + result.data.qty;
+        const currentQty = existingItem?.quantity ?? 0; //if undefined then set to 0;
+        const newQty = currentQty + result.data.qty;
         if (newQty > product.countInStock) {
             return {
                 success: false,
-                message: `Only ${product.countInStock} in stock (you already have ${existingItem?.quantity ?? 0} in your cart)`,
+                message:
+                    currentQty >= product.countInStock
+                        ? "You have reached the maximum available quantity in you cart"
+                        : `You can only add ${product.countInStock - currentQty} more of this items`,
             };
         }
 
         await prisma.cartItem.upsert({
-            where: { cartId_productId: { cartId: cart.id, productId: product.id } },
+            where: {
+                cartId_productId: { cartId: cart.id, productId: product.id },
+            },
             update: { quantity: newQty },
-            create: { cartId: cart.id, productId: product.id, quantity: newQty },
+            create: {
+                cartId: cart.id,
+                productId: product.id,
+                quantity: newQty,
+            },
         });
 
-        revalidatePath("/cart");
+        //refresh the cached data
+        revalidatePath("/","layout");
 
         return { success: true, message: "Added to cart" };
     } catch (e) {
         console.error("Error occurred while adding to cart", e);
-        return { success: false, message: "Could not add to cart. Please try again." };
+        return {
+            success: false,
+            message: "Could not add to cart. Please try again.",
+        };
     }
 };
+
+//get the cart
+
+

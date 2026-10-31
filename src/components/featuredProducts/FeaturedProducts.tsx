@@ -7,7 +7,6 @@ import ProductList from "../ProductList/ProductList";
 const FeaturedProducts = async () => {
 
   const products = await fetchTopProducts();
-  // const products = await fetchAllProducts();
 
 
   return (

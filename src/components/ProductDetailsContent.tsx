@@ -23,7 +23,7 @@ const ProductDetailsContent = async ({
     }
 
     return (
-        <div className="items-center p-6 grid grid-cols-12 gap-8 min-h-[50dvh] mt-8">
+        <div className="p-6 grid grid-cols-12 gap-8 min-h-[50dvh] mt-8">
             {/* image */}
             <div className="col-span-12 md:col-span-5">
                 <Image
@@ -62,9 +62,7 @@ const ProductDetailsContent = async ({
                     countInStock={product.countInStock}
                 />
             </div>
-            {/* </div> */}
         </div>
-        //   <div>Product details Content + {product.id}</div>
     );
 };
 export default ProductDetailsContent;

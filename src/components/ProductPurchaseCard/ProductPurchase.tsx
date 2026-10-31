@@ -18,6 +18,7 @@ import { ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 import { currencyFormatter } from "@/lib/utils";
 import { addToCart } from "@/utils/actions/cartActions";
+import { useRouter } from "next/navigation";
 
 type ProductPurchaseProps = {
     productId: string;
@@ -31,6 +32,7 @@ const ProductPurchase = ({
     countInStock,
 }: ProductPurchaseProps) => {
     const [qty, setQty] = useState(1);
+    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const maximumQty = 10;
     const inStock = countInStock > 0;
@@ -45,6 +47,8 @@ const ProductPurchase = ({
             const result = await addToCart(productId, qty);
             if (result.success) {
                 toast.success(result.message);
+                router.replace("/cart");
+                router.refresh();
             } else {
                 toast.error(result.message);
             }
@@ -62,11 +66,18 @@ const ProductPurchase = ({
                         </p>
                     </div>
                     <Separator />
-                    <div className="flex justify-between items-center">
-                        <p className="text-sm text-muted-foreground">Status:</p>
-                        <strong className="text-xl font-semibold">
-                            {inStock ? "In stock" : "Out of stock"}
-                        </strong>
+                    <div className="flex flex-col justify-between">
+                        <div className="flex justify-between items-center">
+                            <p className="text-sm text-muted-foreground">
+                                Status:
+                            </p>
+                            <strong className="text-xl font-semibold">
+                                {inStock ? "In stock" : "Out of stock"}
+                            </strong>
+                        </div>
+                        <p className="text-lime-500 font-bold">
+                            {countInStock === 1 && "Only left 1"}
+                        </p>
                     </div>
                     <Separator />
                     <div className="flex flex-col gap-4">
@@ -84,10 +95,7 @@ const ProductPurchase = ({
                                 }
                                 disabled={!inStock}
                             >
-                                <SelectTrigger
-                                    id="qty"
-                                    className="w-24"
-                                >
+                                <SelectTrigger id="qty" className="w-24">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="w-24 min-w-24">

@@ -11,8 +11,8 @@ const ProductsPage = () => {
             <div className="flex justify-center items-center w-full mb-6">
                 <CarouselComp />
             </div>
-            <div className="products">
-                <SectionTitle text="popular products" />
+            <div className="flex flex-col gap-4 p-4">
+                <SectionTitle text="popular products"/>
                 <Suspense fallback={<Message>Loading products...</Message>}>
                     <ProductContent />
                 </Suspense>
