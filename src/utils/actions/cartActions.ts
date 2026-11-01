@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { getCurrentSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { addToCartSchema } from "@/lib/schemas";
+import { success } from "zod";
 
 export type CartActionState = {
     success: boolean;
@@ -85,7 +86,7 @@ export const addToCart = async (
         });
 
         //refresh the cached data
-        revalidatePath("/","layout");
+        revalidatePath("/", "layout");
 
         return { success: true, message: "Added to cart" };
     } catch (e) {
@@ -97,6 +98,49 @@ export const addToCart = async (
     }
 };
 
-//get the cart
+export const updateCartItemQty = async (
+    itemId: string,
+    qty: number,
+): Promise<CartActionState> => {
+    if (!Number.isInteger(qty) || qty < 1) {
+        return { success: false, message: "Invalid quantity" };
+    }
 
+    const session = await getCurrentSession();
 
+    if (!session) return { success: false, message: "Please log in first!" };
+
+    // find the cart belong to the user
+    try {
+        const userId = session.user.id;
+
+        const item = await prisma.cartItem.findFirst({
+            where: { id: itemId, cart: { userId: userId } },
+            select: { id: true, product: { select: { countInStock: true } } },
+        });
+
+        if (!item) return { success: false, message: "Item not found!" };
+
+        // check the qty whether is greater than the stock
+        if (qty > item.product.countInStock) {
+            return {
+                success: false,
+                message: `Only ${item.product.countInStock} in stock`,
+            };
+        }
+
+        await prisma.cartItem.update({
+            where: { id: item.id },
+            data: { quantity: qty },
+        });
+
+        revalidatePath("/", "layout"); // refresh the linetotal, subtotal and navbar
+        return {
+            success: true,
+            message: "Quantity of the item has been updated",
+        };
+    } catch (err) {
+        console.error("Error in updating the quantity", err);
+        return { success: false, message: "Failed to update quantity!" };
+    }
+};
