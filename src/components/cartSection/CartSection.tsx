@@ -1,27 +1,31 @@
-import { getUserCart } from "@/utils/actions/carts";
-import { ShoppingCart } from "lucide-react";
-import Message from "../global/Message";
+// import { getUserCart } from "@/utils/actions/carts";
+// import { ShoppingCart } from "lucide-react";
+// import Message from "../global/Message";
+// import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import QuantitySelect from "./QuantitySelect";
+import type { CartItem } from "@/utils/actions/carts"
 
-const CartSection = async () => {
-    const data = await getUserCart();
-    const items = data.cart?.items ?? [];
 
-    if (items.length === 0)
-        return (
-            <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed">
-                <ShoppingCart className="size-10 text-muted-foreground" />
-                <Message type="info">Your cart is empty.</Message>
-                <Button
-                    render={<Link href="/products" />}
-                    className="bg-nav text-nav-foreground"
-                >
-                    Continue shopping
-                </Button>
-            </div>
-        );
+
+const CartSection = ({ items }:{items:CartItem[]}) => {
+    // const data = await getUserCart();
+    // const items = data.cart?.items ?? [];
+
+    // if (items.length === 0)
+    //     return (
+    //         <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed">
+    //             <ShoppingCart className="size-10 text-muted-foreground" />
+    //             <Message type="info">Your cart is empty.</Message>
+    //             <Button
+    //                 render={<Link href="/products" />}
+    //                 className="bg-nav text-nav-foreground"
+    //             >
+    //                 Continue shopping
+    //             </Button>
+    //         </div>
+    //     );
 
     return (
         <ul className="divide-y rounded-xl border bg-card">
@@ -47,8 +51,17 @@ const CartSection = async () => {
                         <p className="text-sm text-muted-foreground">
                             ${item.product.price.toFixed(2)} each
                         </p>
+                        {item.product.countInStock === 1 && (
+                            <aside className="text-sky-400 font-bold">Left only 1</aside>
+                        )}
                     </div>
-                    <p className="w-16 text-center">X {item.quantity}</p>
+                    {/* <p className="w-16 text-center">X {item.quantity}</p> */}
+                    <QuantitySelect
+                        countInStock={item.product.countInStock}
+                        itemId={item.id}
+                        quantity={item.quantity}
+                        productName={item.product.name}
+                    />
                     {/* line total */}
                     <p className="w-20 text-right font-semibold">
                         ${item.lineTotal.toFixed(2)}

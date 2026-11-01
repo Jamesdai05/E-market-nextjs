@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Loader from "@/components/global/Loader";
 import ProfileSection from "@/components/profile/ProfileSection";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
+import CartSummary from "@/components/cartSection/CartSummary";
 
 
 const ProfilePage = async () => {
@@ -16,7 +17,9 @@ const ProfilePage = async () => {
                       </Suspense>
                   </div>
                   <div className="orders md:col-span-7">
-                      <h1>Here will be the orders displaying.</h1>
+            <Suspense fallback={<Loader />}>
+              <CartSummary />
+            </Suspense>
                   </div>
               </div>
           </div>

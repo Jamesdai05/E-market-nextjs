@@ -55,7 +55,7 @@ const QuantitySelect = ({
             </SelectTrigger>
         <SelectContent className="w-20 min-w-20">
           {options.map(i => (
-            <SelectItem key={i} value={String(i)}>{i+1}</SelectItem>
+            <SelectItem key={i} value={String(i)}>{i}</SelectItem>
           ))}
             </SelectContent>
         </Select>

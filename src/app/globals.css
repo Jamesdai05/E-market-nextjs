@@ -156,12 +156,12 @@
         @apply flex flex-col gap-2;
     }
 
-    .hero-heading{
-      @apply text-4xl font-bold tracking-tight text-balance md:text-5xl;
+    .hero-heading {
+        @apply text-4xl font-bold tracking-tight text-balance md:text-5xl;
     }
 
-    .form-group{
-      @apply flex flex-col gap-2 justify-center;
+    .form-group {
+        @apply flex flex-col gap-2 justify-center;
     }
 }
 
@@ -169,4 +169,6 @@
     @apply w-full max-w-sm bg-chart-1 p-2;
 } */
 
-
+.link-btn {
+    @apply w-full text-nav-foreground bg-nav hover:text-chart-1 hover:bg-nav-accent;
+}

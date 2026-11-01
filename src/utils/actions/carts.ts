@@ -61,3 +61,8 @@ export const getUserCart = cache(async () => {
         },
     };
 });
+
+export type CartData = NonNullable<
+    Awaited<ReturnType<typeof getUserCart>>["cart"]
+>;
+export type CartItem = CartData["items"][number];
