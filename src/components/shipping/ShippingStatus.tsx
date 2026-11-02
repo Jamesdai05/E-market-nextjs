@@ -28,7 +28,6 @@ const CheckOutSteps = () => {
         <nav aria-label="Checkout progress" className="mb-8">
             <ol className="flex justify-center items-center">
                 {steps.map((step, index) => {
-                    const stepNumber = index + 1;
                     const isDone = index < current;
                     const isCurrent = index === current;
                     const isLast = index === steps.length - 1;

@@ -19,6 +19,7 @@ model User {
   banReason     String?
   banned        Boolean   @default(false)
   role          String    @default("user")
+  orders        Order[]
   cart          Cart?
   products      Product[]
   reviews       Review[]
@@ -69,6 +70,7 @@ model Product {
   cartItems    CartItem[]
   user         User       @relation(fields: [userId], references: [id]) //deleting the product will remove it from everyone's cart
   reviews      Review[]
+  orderItems OrderItem[]
 
   @@index([category])
 
@@ -135,4 +137,67 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Order{
+  id String @id @default(uuid())
+  userId String
+
+// Shipping address snapshot
+  shippingName String
+  address String
+  city String
+  postalcode String
+  country String
+  phone String?
+
+  //payment
+  paymentMethod String
+  paymentId String?
+  paymentStatus String?
+  paymentUpdateTime DateTime?
+  paymentEmail String?
+
+  //order price
+  itemsPrice Decimal @default(0) @db.Decimal(10,2)
+  taxPrice Decimal @default(0) @db.Decimal(10,2)
+  shippingPrice Decimal @default(0) @db.Decimal(10,2)
+  totalPrice Decimal @default(0) @db.Decimal(10,2)
+
+  //order status
+  isPaid Boolean @default(false)
+  paidAt DateTime?
+  isDelivered Boolean @default(false)
+  deliveredAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //relations
+  user User @relation(fields: [userId],references: [id])
+  orderItems OrderItem[]
+
+  @@index([userId])
+}
+
+model OrderItem{
+  id String @id @default(uuid())
+  orderId String
+  productId String
+
+//productt snapshot at purchase time
+  name String
+  price Decimal @db.Decimal(10,2)
+  image String
+  quantity Int
+
+  createdAt DateTime @default(now())
+
+  // relations
+  order Order @relation(fields: [orderId],references: [id],onDelete: Cascade)
+  product Product @relation(fields: [productId],references: [id])
+
+
+  @@index([orderId])
+  @@index([productId])
 }
