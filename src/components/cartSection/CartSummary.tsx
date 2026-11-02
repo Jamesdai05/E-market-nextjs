@@ -11,7 +11,6 @@ import {
 
 const CartSummary = async () => {
     const result = await getUserCart();
-    console.log(result);
 
     const cart = result.cart;
     const subTotal = (cart?.subTotal ?? 0).toFixed(2);
@@ -21,16 +20,16 @@ const CartSummary = async () => {
     return (
         <Card className="md:sticky md:top-20">
             <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
+                <CardTitle className="text-xl font-semibold">Order Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
                 <div className="flex justify-between">
                     <span className="text-muted-foreground">Items</span>
                     <span className="text-lg">{cart?.itemCount ?? 0}</span>
                 </div>
-                <div className="flex jsutify-between items-center text-base font-semibold">
-                    <span>SubTotal:</span>
-                    <span>{subTotal}</span>
+                <div className="flex justify-between items-center text-base font-semibold">
+                    <span className="text-muted-foreground font-bold">SubTotal:</span>
+                    <p className="text-lg">{subTotal}</p>
                 </div>
             </CardContent>
             <CardFooter>
@@ -38,12 +37,12 @@ const CartSummary = async () => {
                     <Button
                         render={<Link href={"/shipping"} />}
                         nativeButton={false}
-                        className="link-btn"
+                        variant="linkBtn"
                     >
                         Proceed to Checkout
                     </Button>
                 ) : (
-                    <Button disabled className="link-btn">
+                    <Button disabled variant="linkBtn">
                         Proceed to Checkout
                     </Button>
                 )}

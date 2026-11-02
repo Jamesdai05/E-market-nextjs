@@ -144,3 +144,33 @@ export const updateCartItemQty = async (
         return { success: false, message: "Failed to update quantity!" };
     }
 };
+
+
+export const removeItemFromCart = async(itemId:string):Promise<CartActionState>=> {
+  if (typeof itemId !== "string" || itemId.length === 0) {
+    return { success: false, message: "Invalid itemId" };
+  }
+
+  // checck user is login or not
+  const session = await getCurrentSession();
+  if (!session) {
+    return { success: false, message: "Please login first." };
+  }
+
+  try {
+    const { count } = await prisma.cartItem.deleteMany({
+      where: { id: itemId, cart: { is:{ userId: session.user.id }} },
+    });
+
+    if (count === 0) { return { success: false, message: "Item not found in the cart." }; };
+
+    revalidatePath("/", "layout");
+
+    return { success: true, message: "Item has been removed successfully!" };
+
+  } catch (err) {
+    console.error("Error in removing the items", err);
+    return {success:false,message:"Could not remove the item,please try again.",}
+  }
+
+}

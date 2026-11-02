@@ -26,7 +26,7 @@ const QuantitySelect = ({
 }: QuantitySelectProps) => {
     const [isPending, startTransition] = useTransition();
 
-    const maxQty = Math.max(countInStock, 10); //check the maximum qty available;
+    const maxQty = Math.min(countInStock, 10); //check the maximum qty available;
     const options = Array.from({ length: maxQty }, (_, i) => i + 1);
 
     const handleChange = (value: string | null) => {

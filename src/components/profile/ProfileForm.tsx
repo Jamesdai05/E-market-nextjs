@@ -38,7 +38,7 @@ const ProfileForm = ({ name, email }: ProfileFormProps) => {
                 />
             </div>
             <div className="form-group">
-                <Button className="text-nav-foreground bg-nav">Update</Button>
+                <Button variant="linkBtn">Update</Button>
             </div>
         </form>
     );

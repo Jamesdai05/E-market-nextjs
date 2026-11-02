@@ -18,9 +18,15 @@ const getOptionalUser = async () => {
     return session?.user ?? null;
 };
 
-const getCurrentUser = async () => {
+const getCurrentUser = async (redirectTo?: string) => {
     const session = await getCurrentSession();
-    if (!session) redirect("/login");
+    if (!session) {
+        // to remeber where the user would like to go,
+        const loginUrl = redirectTo
+            ? `/login?redict=${encodeURI(redirectTo)}`
+            : "/login";
+        redirect(loginUrl);
+    }
 
     const user = session.user;
 

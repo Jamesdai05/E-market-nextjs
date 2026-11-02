@@ -58,7 +58,8 @@
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
+    /* --primary: oklch(0.205 0 0); */
+    --primary:oklch(0.8502 0.0857 236.57);
     --primary-foreground: oklch(0.985 0 0);
     --secondary: oklch(0.97 0 0);
     --secondary-foreground: oklch(0.205 0 0);
@@ -169,6 +170,11 @@
     @apply w-full max-w-sm bg-chart-1 p-2;
 } */
 
-.link-btn {
+/* .link-btn {
     @apply w-full text-nav-foreground bg-nav hover:text-chart-1 hover:bg-nav-accent;
+} */
+
+
+@utility contentContainer{
+  @apply max-w-7xl flex justify-center items-center mx-auto px-4 py-6;
 }

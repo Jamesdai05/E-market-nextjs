@@ -18,7 +18,7 @@ const initalState: LoginState = {
     errors: {},
 };
 
-const LogInForm = () => {
+const LogInForm = ({redirectTo="/profile"}:{redirectTo?:string}) => {
     const [state, formAction, isPending] = useActionState(login, initalState);
     const router = useRouter();
 
@@ -26,12 +26,12 @@ const LogInForm = () => {
         if (!state.message) return;
         if (state.success) {
             toast.success("Login successfully");
-            router.replace("/profile");
+            router.replace(redirectTo);
             router.refresh();
         } else {
             toast.error(state.message);
         }
-    }, [state]);
+    }, [state,router,redirectTo]);
 
     return (
         <form

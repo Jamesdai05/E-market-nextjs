@@ -5,11 +5,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import QuantitySelect from "./QuantitySelect";
-import type { CartItem } from "@/utils/actions/carts"
+import type { CartItem } from "@/utils/actions/carts";
+import RemoveButton from "./RemoveButton";
 
-
-
-const CartSection = ({ items }:{items:CartItem[]}) => {
+const CartSection = ({ items }: { items: CartItem[] }) => {
     // const data = await getUserCart();
     // const items = data.cart?.items ?? [];
 
@@ -52,7 +51,9 @@ const CartSection = ({ items }:{items:CartItem[]}) => {
                             ${item.product.price.toFixed(2)} each
                         </p>
                         {item.product.countInStock === 1 && (
-                            <aside className="text-sky-400 font-bold">Left only 1</aside>
+                            <aside className="text-sky-400 font-bold">
+                                Left only 1
+                            </aside>
                         )}
                     </div>
                     {/* <p className="w-16 text-center">X {item.quantity}</p> */}
@@ -66,6 +67,10 @@ const CartSection = ({ items }:{items:CartItem[]}) => {
                     <p className="w-20 text-right font-semibold">
                         ${item.lineTotal.toFixed(2)}
                     </p>
+                    <RemoveButton
+                        itemId={item.id}
+                        productName={item.product.name}
+                    />
                 </li>
             ))}
         </ul>
