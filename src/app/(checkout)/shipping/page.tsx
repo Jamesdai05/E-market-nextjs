@@ -1,10 +1,16 @@
-import ShippingContent from "@/components/shipping/ShippingContent";
+import Loader from "@/components/global/Loader";
+import ShippingSection from "@/components/shipping/ShippingSection";
+import { Suspense } from "react";
 
 const ShippingPage = () => {
+
+
   return (
-    <>
-      <ShippingContent />
-    </>
+      <div>
+          <Suspense fallback={<Loader />}>
+              <ShippingSection />
+          </Suspense>
+      </div>
   );
 }
 export default ShippingPage;

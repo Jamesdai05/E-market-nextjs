@@ -2,6 +2,8 @@ import { Suspense,type ReactNode } from "react"
 import { getCurrentUser } from "@/lib/session"
 import CheckOutSteps from "@/components/shipping/ShippingStatus";
 import Loader from "@/components/global/Loader";
+import SectionTitle from "@/components/sectionTitle/SectionTitle";
+
 
 
 
