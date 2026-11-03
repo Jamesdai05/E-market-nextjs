@@ -34,7 +34,7 @@ model Cart {
   userId    String     @unique
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  user      User       @relation(fields: [userId], references: [id],onDelete: Cascade)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   items     CartItem[]
 }
 
@@ -46,34 +46,41 @@ model CartItem {
   updatedAt DateTime @updatedAt
   quantity  Int      @default(1)
   cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  product   Product  @relation(fields: [productId], references: [id],onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([cartId, productId])
   @@index([productId])
 }
 
+enum ProductStatus {
+  DRAFT // admin is still preparing it, not visible
+  ACTIVE // on sale
+  DISCONTINUED // no longer sold, kept for order history
+}
+
 model Product {
-  id           String     @id @default(uuid())
-  productId    String
+  id           String        @id @default(uuid())
+  sku          String?       @unique
   name         String
-  price        Decimal    @default(0) @db.Decimal(10, 2)
+  price        Decimal       @default(0) @db.Decimal(10, 2)
   userId       String
   image        String
-  rating       Float      @default(0)
-  numReviews   Int        @default(0)
-  countInStock Int        @default(0)
+  rating       Float         @default(0)
+  numReviews   Int           @default(0)
+  countInStock Int           @default(0)
   description  String?
   category     String
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   brand        String
   cartItems    CartItem[]
-  user         User       @relation(fields: [userId], references: [id]) //deleting the product will remove it from everyone's cart
+  user         User          @relation(fields: [userId], references: [id]) //deleting the product will remove it from everyone's cart
   reviews      Review[]
-  orderItems OrderItem[]
+  orderItems   OrderItem[]
+  status       ProductStatus @default(ACTIVE) //means on sale.
 
   @@index([category])
-
+  @@index([userId])
 }
 
 model Review {
@@ -87,7 +94,7 @@ model Review {
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([productId,userId])
+  @@unique([productId, userId])
   @@index([userId])
 }
 
@@ -139,64 +146,63 @@ model Verification {
   @@map("verification")
 }
 
-model Order{
-  id String @id @default(uuid())
+model Order {
+  id     String @id @default(uuid())
   userId String
 
-// Shipping address snapshot
+  // Shipping address snapshot
   shippingName String
-  address String
-  city String
-  postalcode String
-  country String
-  phone String?
+  address      String
+  city         String
+  postalCode   String
+  country      String
+  phone        String?
 
   //payment
-  paymentMethod String
-  paymentId String?
-  paymentStatus String?
+  paymentMethod     String
+  paymentId         String?
+  paymentStatus     String?
   paymentUpdateTime DateTime?
-  paymentEmail String?
+  paymentEmail      String?
 
   //order price
-  itemsPrice Decimal @default(0) @db.Decimal(10,2)
-  taxPrice Decimal @default(0) @db.Decimal(10,2)
-  shippingPrice Decimal @default(0) @db.Decimal(10,2)
-  totalPrice Decimal @default(0) @db.Decimal(10,2)
+  itemsPrice    Decimal @default(0) @db.Decimal(10, 2)
+  taxPrice      Decimal @default(0) @db.Decimal(10, 2)
+  shippingPrice Decimal @default(0) @db.Decimal(10, 2)
+  totalPrice    Decimal @default(0) @db.Decimal(10, 2)
 
   //order status
-  isPaid Boolean @default(false)
-  paidAt DateTime?
-  isDelivered Boolean @default(false)
+  isPaid      Boolean   @default(false)
+  paidAt      DateTime?
+  isDelivered Boolean   @default(false)
   deliveredAt DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   //relations
-  user User @relation(fields: [userId],references: [id])
+  user       User        @relation(fields: [userId], references: [id]) //deleting the user will be blocked
   orderItems OrderItem[]
 
   @@index([userId])
 }
 
-model OrderItem{
-  id String @id @default(uuid())
-  orderId String
+model OrderItem {
+  id        String @id @default(uuid())
+  orderId   String
   productId String
 
-//productt snapshot at purchase time
-  name String
-  price Decimal @db.Decimal(10,2)
-  image String
+  //productt snapshot at purchase time
+  name     String
+  price    Decimal @db.Decimal(10, 2)
+  image    String
   quantity Int
 
   createdAt DateTime @default(now())
 
   // relations
-  order Order @relation(fields: [orderId],references: [id],onDelete: Cascade)
-  product Product @relation(fields: [productId],references: [id])
-
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
 
   @@index([orderId])
   @@index([productId])

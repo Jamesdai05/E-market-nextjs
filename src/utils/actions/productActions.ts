@@ -1,4 +1,3 @@
-// "use server";
 import "server-only";
 import { prisma } from "@/lib/prisma";
 
@@ -29,7 +28,7 @@ export const fetchSingleProduct = async (id: string) => {
         });
 
         // if (!product) return null;
-      return product ? convertPriceToNumber(product) : null;
+        return product ? convertPriceToNumber(product) : null;
     } catch (e) {
         console.error("Error occurred during fetching data", e);
         return null;
