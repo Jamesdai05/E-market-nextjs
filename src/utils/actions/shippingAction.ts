@@ -13,7 +13,7 @@ export type ShippingState = {
   errors?: Record<string, string[]>;
 };
 
-export const shippingDetailsInput = async(
+export const saveShippingDetails = async(
   prevState: ShippingState,
   formData:FormData,
 ): Promise<ShippingState> => {
@@ -39,13 +39,11 @@ export const shippingDetailsInput = async(
     }
   }
 
-  const { address, city, postalCode, country } = result.data;
-
   try {
-    await prisma.order.upsert({
-      where: { id: session.user.id },
+    await prisma.shippingAddress.upsert({
+      where: { userId: session.user.id },
       update: result.data,
-      create:{userId:session.user.id, paymentMethod: "PENDING", ...result.data},
+      create:{userId:session.user.id, ...result.data},
     })
   } catch(e) {
     console.error("Error saving the shipping info", e)

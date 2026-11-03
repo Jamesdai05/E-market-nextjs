@@ -8,23 +8,24 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  name          String
-  email         String    @unique
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  emailVerified Boolean   @default(false)
-  image         String?
-  banExpires    DateTime?
-  banReason     String?
-  banned        Boolean   @default(false)
-  role          String    @default("user")
-  orders        Order[]
-  cart          Cart?
-  products      Product[]
-  reviews       Review[]
-  accounts      Account[]
-  sessions      Session[]
+  id              String           @id @default(uuid())
+  name            String
+  email           String           @unique
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  emailVerified   Boolean          @default(false)
+  image           String?
+  banExpires      DateTime?
+  banReason       String?
+  banned          Boolean          @default(false)
+  role            String           @default("user")
+  shippingAddress ShippingAddress?
+  orders          Order[]
+  cart            Cart?
+  products        Product[]
+  reviews         Review[]
+  accounts        Account[]
+  sessions        Session[]
 
   @@map("user")
 }
@@ -206,4 +207,19 @@ model OrderItem {
 
   @@index([orderId])
   @@index([productId])
+}
+
+model ShippingAddress {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  shippingName String
+  city         String
+  postalCode   String
+  country      String
+  phone        String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
