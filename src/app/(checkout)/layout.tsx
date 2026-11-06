@@ -14,7 +14,7 @@ const CheckLogin = async({children}:{children:ReactNode}) => {
 
 const CheckOutLayout = ({children}:{children:ReactNode}) => {
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-6">
+    <div className="mx-auto w-full max-w-6xl px-4 py-6">
       <CheckOutSteps />
       <Suspense fallback={<Loader />}>
         <CheckLogin>{children}</CheckLogin>

@@ -22,13 +22,18 @@ const methods: { value: PaymentMethod; label: string; icon: LucideIcon }[] = [
     { value: "wechat", label: "WeChat Pay", icon: Wallet },
 ];
 
-const PaymentSection = ({ defaultMethod }: { defaultMethod?: PaymentMethod }) => {
+const PaymentSection = ({
+    defaultMethod,
+}: {
+    defaultMethod?: PaymentMethod;
+}) => {
     const [state, formAction, isPending] = useActionState(
         savePaymentMethod,
         initialState,
     );
 
-    const selected = defaultMethod ?? "paypal";
+  const selected = defaultMethod ?? "paypal";
+
 
     useEffect(() => {
         if (state.message && !state.success) toast.error(state.message);
@@ -65,8 +70,9 @@ const PaymentSection = ({ defaultMethod }: { defaultMethod?: PaymentMethod }) =>
                     </Label>
                 ))}
             </fieldset>
+
             <Button type="submit" disabled={isPending}>
-                {isPending ? "Submitting..." : "Submit"}
+                {isPending ? "Saving" : "Continue"}
             </Button>
         </form>
     );

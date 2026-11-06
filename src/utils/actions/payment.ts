@@ -36,5 +36,6 @@ export const savePaymentMethod = async (prevState: PaymentState, formData: FormD
     secure: process.env.NODE_ENV === "production"
   });
 
+  // console.log("payment result:", result.success ? result.data.paymentMethod : result);
   redirect("/placeorder")
 }
