@@ -17,7 +17,16 @@ const ShippingSection = async () => {
       <div>
             {/* <SectionTitle text={"shipping info"} /> */}
             <Suspense fallback={<Loader />}>
-                <ShippingContent defaults={savedUser ?? undefined} />
+                <ShippingContent
+                    defaults={savedUser ?? {
+                        shippingName: "",
+                        address: "",
+                        city: "",
+                        postalCode: "",
+                        country: "",
+                        phone: "",
+                    }}
+                />
             </Suspense>
         </div>
     );

@@ -1,11 +1,11 @@
 import { fetchSingleProduct } from "@/utils/actions/productActions";
 import { Separator } from "@/components/ui/separator";
-import ProductPurchase from "./ProductPurchaseCard/ProductPurchase";
+import ProductPurchase from "./product/ProductPurchaseCard/ProductPurchase";
 // import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { currencyFormatter } from "@/lib/utils";
-import Rating from "./Rating/Rating";
+import Rating from "./product/Rating/Rating";
 // import
 
 const ProductDetailsContent = async ({

@@ -1,5 +1,5 @@
 import { fetchAllProducts } from "@/utils/actions/productActions";
-import Message from "../global/Message";
+import Message from "@/components/global/Message";
 import ProductList from "../ProductList/ProductList";
 
 

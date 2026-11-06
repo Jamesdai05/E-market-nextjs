@@ -1,4 +1,4 @@
-import { ProductCard } from "@/components/productCard/ProductCard"
+import { ProductCard } from "@/components/product/productCard/ProductCard"
 import type { ProductDTO } from "@/utils/types"
 
 type ProductListProps = {

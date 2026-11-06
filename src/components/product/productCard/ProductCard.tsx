@@ -1,20 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Rating from "@/components/Rating/Rating";
+import Rating from "@/components/product/Rating/Rating";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { ShoppingCart} from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import type { ProductDTO } from "@/utils/types";
-import {currencyFormatter } from "@/lib/utils"
+import { currencyFormatter } from "@/lib/utils";
 import Link from "next/link";
 
 type ProductCardProps = {
     product: ProductDTO;
 };
 
-
-
 export function ProductCard({ product }: ProductCardProps) {
-
     return (
         <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
             <Link href={`/products/${product.id}`}>
@@ -35,7 +32,10 @@ export function ProductCard({ product }: ProductCardProps) {
                 {/* Rating */}
                 <div className="flex items-center gap-1.5 text-sm">
                     <div className="flex items-center">
-                        <Rating rating={product.rating} reviews={product.numReviews} />
+                        <Rating
+                            rating={product.rating}
+                            reviews={product.numReviews}
+                        />
                     </div>
                 </div>
 

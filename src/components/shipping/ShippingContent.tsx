@@ -48,7 +48,6 @@ const ShippingContent = ({defaults}:{defaults:ShippingInfoType}) => {
 
   return (
     <div className="flex flex-col gap-3 px-16 mx-auto max-w-2xl">
-          <SectionTitle text={"shipping info"} />
           <form action={formAction} className="flex flex-col gap-4">
               <div className="form-group">
                   <Label htmlFor="shippingName">Name</Label>

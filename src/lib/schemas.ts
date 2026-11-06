@@ -31,11 +31,21 @@ export const shippingInfoSchema = z.object({
   city: z.string().trim().min(1, "City name is required.").max(30,"City name is too long."),
   postalCode: z.string().trim().min(3,"Postal is required").max(10,"Postalcode is too long").regex(/^[A-Za-z0-9]+$/,"Postcal code can only contain letters, numbers,spaces and dashes!"),
   country: z.string().trim().min(2, "Country at least to be 2 characters.").max(60, "Country name is too long!"),
-  phone: z.string().trim().max(20).optional(),
+  phone: z.string().trim().min(6).max(20).optional(),
 })
 
+
+export const paymentSchema = z.object({
+  paymentMethod: z.enum(["paypal","wechat","creditcard"]),
+})
+
+// below is for the useForm hook
 export type loginInput = z.infer<typeof loginSchema>
 
 export type registrationInput = z.infer<typeof registrationSchema>;
 
-export type shippingInfoInput=z.infer<typeof shippingInfoSchema>
+export type shippingInfoInput = z.infer<typeof shippingInfoSchema>
+
+export type PaymentInput = z.infer<typeof paymentSchema>;
+
+

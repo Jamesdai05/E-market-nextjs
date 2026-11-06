@@ -8,15 +8,12 @@ import SectionTitle from "../sectionTitle/SectionTitle";
 
 
 const steps = [
-    { label: "Sign In", href: "null" },
-    { label: "Shipping", href: "/shipping" },
-    { label: "Payment", href: "/payment" },
-    { label: "Place Order", href: "/placeorder" },
+    { label: "Sign In", href: "null",title:"Sign In" },
+    { label: "Shipping", href: "/shipping", title:"Shipping Info"},
+    { label: "Payment", href: "/payment", title:"Payment method"},
+    { label: "Place Order", href: "/placeorder", title: "Review the orders" },
 ];
 
-type stepProps = {
-    currentStep: 1 | 2 | 3 | 4;
-};
 
 const CheckOutSteps = () => {
   const pathname = usePathname();
@@ -24,6 +21,7 @@ const CheckOutSteps = () => {
   // find the step we are on from the url
   const currentIndex = steps.findIndex(s => s.href === pathname);
   const current = currentIndex === -1 ? 1 : currentIndex;
+  const title = steps[current]?.title ?? "";
 
 
   return (
@@ -104,7 +102,7 @@ const CheckOutSteps = () => {
                   })}
               </ol>
       </nav>
-      <SectionTitle text={pathname} />
+      <SectionTitle text={title} />
       </div>
   );
 };

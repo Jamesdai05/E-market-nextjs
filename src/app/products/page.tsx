@@ -1,8 +1,8 @@
 import CarouselComp from "@/components/Carousel/CarouselComp";
 import { Suspense } from "react";
 import Message from "@/components/global/Message";
-import ProductContent from "@/components/productContents/ProductContents";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
+import ProductContent from "@/components/product/productContents/ProductContents";
 
 const ProductsPage = () => {
 

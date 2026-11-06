@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Hero from "../components/Hero/Hero";
-import FeaturedProducts from "@/components/featuredProducts/FeaturedProducts";
+import FeaturedProducts from "@/components/product/featuredProducts/FeaturedProducts";
 import Loader from "@/components/global/Loader";
 import SectionTitle from "@/components/sectionTitle/SectionTitle";
 
