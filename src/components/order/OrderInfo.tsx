@@ -1,7 +1,8 @@
 import { CreditCard } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { OrderData } from "@/utils/actions/order/orderAction";
 
-const OrderInfo = () => {
+const OrderInfo = ({order}:{order:OrderData}) => {
   return (
     <div className="flex flex-col col-span-12 md:col-span-6 border rounded-lg p-4">
       <div className="title flex gap-2 justify-start">
@@ -9,8 +10,8 @@ const OrderInfo = () => {
         <h1>Payment</h1>
       </div>
       <div className="info flex flex-col gap-2">
-        <p>Paypal</p>
-        <Badge>Payment Status</Badge>
+        <p>{order.paymentMethod}</p>
+        <Badge>unpaid</Badge>
       </div>
     </div>
   )

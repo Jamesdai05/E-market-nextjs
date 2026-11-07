@@ -1,8 +1,10 @@
 import { Truck } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { OrderData } from "@/utils/actions/order/orderAction";
 
-const OrderSummaryCard = () => {
-    const isDelivered = false;
+const OrderSummaryCard = ({ order }: { order: OrderData }) => {
+  const { isDelivered } = order;
+    // if (!("shippingName" in order)) return null;
     return (
         <div className="mx-auto flex flex-col md:col-span-6 border rounded-lg p-4">
             <div className="flex gap-2 items-center">
@@ -10,14 +12,31 @@ const OrderSummaryCard = () => {
                 <h2 className="text-lg">Shipping</h2>
             </div>
             <div className="flex flex-col">
-                <p>Name</p>
-                <p>User.email@example.com</p>
-                <p>shipping address:123 Street ABC, George City</p>
-                <Badge
-                    className={`${isDelivered ? "text-green-400 bg-green-200" : "text-red-500 bg-red-200"} font-medium `}
-                >
-                    {isDelivered ? "Delivered" : "Not Delivered"}
-                </Badge>
+                <p>
+                    <span className="text-muted-foreground">Name:</span>
+                    {order.shippingName}
+                </p>
+                <p>
+                    <span>Email:</span>
+                    {order.user.email}
+                </p>
+                <p>
+                    <span className="text-muted-foreground">
+                        shipping address:
+                    </span>
+                    {order.address}, {order.city}
+                    {order.country}
+                    {order.postalCode}
+                </p>
+                {isDelivered ? (
+                    <Badge className="text-green-300 bg-green-100">
+                        Delivered
+                    </Badge>
+                ) : (
+                    <Badge variant="destructive">
+                        Not Delivered
+                    </Badge>
+                )}
             </div>
         </div>
     );

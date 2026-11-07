@@ -13,7 +13,7 @@ import PlaceOrderButton from "@/components/placeorder/placeOrderButton";
 import { calcPrice, TaxRate } from "@/utils/priceCaculation";
 
 const OrderSummary = ({ subtotal }: { subtotal: number }) => {
-    const { itemsPrice, shippingFee, taxPrice, totalPrice } =
+    const { itemsPrice, shippingPrice, taxPrice, totalPrice } =
         calcPrice(subtotal);
 
     return (
@@ -26,8 +26,8 @@ const OrderSummary = ({ subtotal }: { subtotal: number }) => {
             <CardContent className="space-y-2 text-sm">
                 <Row label={"ItemsPrice"} value={itemsPrice} bold={true} />
                 <Row
-                    label={`${shippingFee === 0 ? "Shipping(free)" : "Shipping"}`}
-                    value={shippingFee}
+                    label={`${shippingPrice === 0 ? "Shipping(free)" : "Shipping"}`}
+                    value={shippingPrice}
                     bold={true}
                 />
                 <Row

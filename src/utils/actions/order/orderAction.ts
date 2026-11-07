@@ -5,10 +5,10 @@ import { getCurrentSession } from "@/lib/session";
 
 
 
-export const getOrderAction=cache(async(orderId: string)=>{
+export const getOrderById=cache(async(orderId: string)=>{
   const session = await getCurrentSession();
 
-  if (!session) return { success: false, message: "Please log in first!" };
+  if (!session) return null;
 
   try {
     const order = await prisma.order.findUnique({
@@ -44,4 +44,4 @@ export const getOrderAction=cache(async(orderId: string)=>{
   }
 })
 
-export type OrderData = NonNullable<Awaited<ReturnType<typeof getOrderAction>>>;
+export type OrderData = NonNullable<Awaited<ReturnType<typeof getOrderById>>>;
