@@ -39,6 +39,9 @@ export const paymentSchema = z.object({
   paymentMethod: z.enum(["paypal","wechat","creditcard"]),
 })
 
+// reuse the schema above
+export const createOrderSchema =shippingInfoSchema.safeExtend(paymentSchema.shape)
+
 // below is for the useForm hook
 export type loginInput = z.infer<typeof loginSchema>
 
@@ -47,5 +50,7 @@ export type registrationInput = z.infer<typeof registrationSchema>;
 export type shippingInfoInput = z.infer<typeof shippingInfoSchema>
 
 export type PaymentInput = z.infer<typeof paymentSchema>;
+
+export type createOrderInput = z.infer<typeof createOrderSchema>;
 
 
