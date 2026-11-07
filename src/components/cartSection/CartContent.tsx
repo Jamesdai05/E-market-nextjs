@@ -1,7 +1,7 @@
 import CartSection from "./CartSection";
 import CartSummary from "./CartSummary";
-import SectionTitle from "../sectionTitle/SectionTitle";
-import { getUserCart } from "@/utils/actions/carts";
+import SectionTitle from "../global/sectionTitle/SectionTitle";
+import { getUserCart } from "@/utils/actions/cart/carts";
 import { getCurrentUser } from "@/lib/session";
 import Message from "../global/Message";
 

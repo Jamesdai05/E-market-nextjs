@@ -4,7 +4,7 @@ import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import { CreditCard, Wallet, type LucideIcon } from "lucide-react";
-import { savePaymentMethod, type PaymentState } from "@/utils/actions/payment";
+import { savePaymentMethod, type PaymentState } from "@/utils/actions/payment/payment";
 import type { PaymentInput } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 

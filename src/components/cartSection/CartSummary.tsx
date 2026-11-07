@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { getUserCart } from "@/utils/actions/carts";
+import { getUserCart } from "@/utils/actions/cart/carts";
 import {
     Card,
     CardHeader,
@@ -20,7 +20,9 @@ const CartSummary = async () => {
     return (
         <Card className="md:sticky md:top-20">
             <CardHeader>
-                <CardTitle className="text-xl font-semibold">Order Summary</CardTitle>
+                <CardTitle className="text-xl font-semibold">
+                    Order Summary
+                </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
                 <div className="flex justify-between">
@@ -28,7 +30,9 @@ const CartSummary = async () => {
                     <span className="text-lg">{cart?.itemCount ?? 0}</span>
                 </div>
                 <div className="flex justify-between items-center text-base font-semibold">
-                    <span className="text-muted-foreground font-bold">SubTotal:</span>
+                    <span className="text-muted-foreground font-bold">
+                        SubTotal:
+                    </span>
                     <p className="text-lg">{subTotal}</p>
                 </div>
             </CardContent>

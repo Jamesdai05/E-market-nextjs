@@ -9,7 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { updateCartItemQty } from "@/utils/actions/cartActions";
+import { updateCartItemQty } from "@/utils/actions/cart/cartActions";
 
 type QuantitySelectProps = {
     countInStock: number;
@@ -53,10 +53,12 @@ const QuantitySelect = ({
             >
                 <SelectValue />
             </SelectTrigger>
-        <SelectContent className="w-20 min-w-20">
-          {options.map(i => (
-            <SelectItem key={i} value={String(i)}>{i}</SelectItem>
-          ))}
+            <SelectContent className="w-20 min-w-20">
+                {options.map((i) => (
+                    <SelectItem key={i} value={String(i)}>
+                        {i}
+                    </SelectItem>
+                ))}
             </SelectContent>
         </Select>
     );

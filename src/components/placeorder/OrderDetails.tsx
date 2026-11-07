@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { ShippingAddress } from "@/generated/prisma/client";
 import type { PaymentInput } from "@/lib/schemas";
 
-import type { CartItem } from "@/utils/actions/carts";
+import type { CartItem } from "@/utils/actions/cart/carts";
 
 type OrderDetailsProps = {
     items: CartItem[];
@@ -23,7 +23,10 @@ const OrderDetails = ({ items, shipping, payment }: OrderDetailsProps) => {
                     <p className="font-medium">Name:</p>
                     <p>{shipping.shippingName}</p>
                     <p>
-                        PaymentMethod: <span className="italic font-bold">{payment.paymentMethod}</span>
+                        PaymentMethod:{" "}
+                        <span className="italic font-bold">
+                            {payment.paymentMethod}
+                        </span>
                     </p>
                 </div>
             </div>

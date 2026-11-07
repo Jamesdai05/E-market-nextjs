@@ -1,4 +1,4 @@
-import { fetchSingleProduct } from "@/utils/actions/productActions";
+import { fetchSingleProduct } from "@/utils/actions/product/productActions";
 import { Separator } from "@/components/ui/separator";
 import ProductPurchase from "./product/ProductPurchaseCard/ProductPurchase";
 // import { Button } from "@/components/ui/button";

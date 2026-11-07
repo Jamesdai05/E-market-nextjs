@@ -5,7 +5,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import QuantitySelect from "./QuantitySelect";
-import type { CartItem } from "@/utils/actions/carts";
+import type { CartItem } from "@/utils/actions/cart/carts";
 import RemoveButton from "./RemoveButton";
 
 const CartSection = ({ items }: { items: CartItem[] }) => {

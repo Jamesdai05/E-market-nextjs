@@ -1,4 +1,4 @@
-import { fetchTopProducts } from "@/utils/products";
+import { fetchTopProducts } from "@/utils/actions/product/products";
 import ProductList from "../ProductList/ProductList";
 // import SectionTitle from "@/components/sectionTitle/SectionTitle";
 

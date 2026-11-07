@@ -17,7 +17,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 import { currencyFormatter } from "@/lib/utils";
-import { addToCart } from "@/utils/actions/cartActions";
+import { addToCart } from "@/utils/actions/cart/cartActions";
 import { useRouter } from "next/navigation";
 
 type ProductPurchaseProps = {

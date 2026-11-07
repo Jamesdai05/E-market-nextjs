@@ -7,17 +7,14 @@ import PasswordInput from "../passwordInput/PasswordInput";
 import Link from "next/link";
 import { useActionState, useEffect } from "react";
 // import { registration } from "@/utils/actions/registration";
-import { type RegistrationState } from "@/utils/actions/registration";
+import { type RegistrationState } from "@/utils/actions/auth/registration";
 import Alert from "../error/Alert";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const ShippingForm = () => {
     return (
-        <form
-            action=""
-            className="flex flex-col justify-center gap-4"
-        >
+        <form action="" className="flex flex-col justify-center gap-4">
             <div className="form-group">
                 <Label htmlFor="name">Name</Label>
                 <Input

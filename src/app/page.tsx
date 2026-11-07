@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Hero from "../components/Hero/Hero";
 import FeaturedProducts from "@/components/product/featuredProducts/FeaturedProducts";
 import Loader from "@/components/global/Loader";
-import SectionTitle from "@/components/sectionTitle/SectionTitle";
+import SectionTitle from "@/components/global/sectionTitle/SectionTitle";
 
 export default function Home() {
     return (
