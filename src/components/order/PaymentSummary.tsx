@@ -1,5 +1,6 @@
 import { OrderData } from "@/utils/actions/order/orderAction";
 import PayPalCheckout from "@/components/paypal/PaypalCheckOut";
+import PaypalClientProvider from "../provider/PaypalClientProvider";
 
 const PaymentSummary = ({ order }: { order: OrderData }) => {
     const { itemsPrice, taxPrice, totalPrice, shippingPrice } = order;
@@ -26,7 +27,9 @@ const PaymentSummary = ({ order }: { order: OrderData }) => {
                 </div>
                 <div className="flex w-full">
                     {!order.isPaid && order.paymentMethod === "paypal" && (
-                        <PayPalCheckout orderId={order.id} />
+                        <PaypalClientProvider>
+                            <PayPalCheckout orderId={order.id} />
+                        </PaypalClientProvider>
                     )}
                 </div>
             </div>

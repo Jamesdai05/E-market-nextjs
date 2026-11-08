@@ -15,9 +15,9 @@ export type OrderPrice = {
 
 export const calcPrice = (itemsPrice: number): OrderPrice => {
   const items = roundNum(itemsPrice);
-  const shippingPrice = items > freeShippingThreshold || items === 0 ? 0 : 10;
+  const shippingPrice = items > freeShippingThreshold || items === 0 ? 0 : shippingFee;
   const taxPrice = roundNum(items * TaxRate);
-  const totalPrice = shippingFee + items + taxPrice;
+  const totalPrice = roundNum(items + shippingPrice + taxPrice);
 
   return { itemsPrice: items, shippingPrice, taxPrice, totalPrice };
 };

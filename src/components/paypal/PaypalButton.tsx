@@ -5,6 +5,8 @@ import {
     usePayPal,
     INSTANCE_LOADING_STATE,
 } from "@paypal/react-paypal-js/sdk-v6";
+import { captureOrder, createPaypalOrder } from "@/utils/actions/paypal/actions"
+
 
 type PayPalButtonProps = {
     orderId: string;
@@ -35,20 +37,11 @@ const PayPalButton = ({ orderId }: PayPalButtonProps) => {
     return (
         <PayPalOneTimePaymentButton
             createOrder={async () => {
-                // Call your server action to create
-                // a PayPal payment for this Prisma order.
-
-                // Return the PayPal-generated order ID:
-                // return { orderId: paypalOrderId };
-
-                throw new Error("PayPal order creation not implemented");
+                const order = await createPaypalOrder(orderId);
+                return { orderId: order.id };
             }}
-            onApprove={async ({ orderId: paypalOrderId }) => {
-                // Call your server action to capture payment.
-                // Verify the capture succeeded before
-                // updating your Prisma order.
-
-                console.log("PayPal order:", paypalOrderId);
+            onApprove={async (data) => {
+                await captureOrder(orderId, data.orderId);
             }}
         />
     );

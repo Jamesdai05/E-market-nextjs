@@ -8,6 +8,9 @@ import { paypalClient } from "./client";
 
 const ordersController = new OrdersController(paypalClient);
 
+// the one currency used to create PayPal orders and to verify their captures
+export const PAYPAL_CURRENCY = "SGD";
+
 export async function createPayPalOrder(amount: string): Promise<string> {
     const { result } = await ordersController.createOrder({
         body: {
@@ -15,7 +18,7 @@ export async function createPayPalOrder(amount: string): Promise<string> {
             purchaseUnits: [
                 {
                     amount: {
-                        currencyCode: "SGD",
+                        currencyCode: PAYPAL_CURRENCY,
                         value: amount,
                     },
                 },
