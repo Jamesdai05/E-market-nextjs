@@ -6,7 +6,7 @@ const OrderShippingCard = ({ order }: { order: OrderData }) => {
   const { isDelivered } = order;
     // if (!("shippingName" in order)) return null;
     return (
-        <div className="mx-auto flex flex-col md:col-span-6 border rounded-lg p-4">
+        <div className="flex flex-col col-span-12 md:col-span-6 border rounded-lg p-4">
             <div className="flex gap-2 items-center">
                 <Truck className="size-5" />
                 <h2 className="text-lg">Shipping</h2>

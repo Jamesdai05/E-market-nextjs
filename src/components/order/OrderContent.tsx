@@ -21,7 +21,6 @@ const OrderContent = async ({ params }: OrderDetailsPageProps) => {
             <OrderDetailsCard order={order} slug={slug} />
             <OrderItemList order={order} />
             <PaymentSummary order={order} />
-            <PayPalCheckout />
         </>
     );
 };

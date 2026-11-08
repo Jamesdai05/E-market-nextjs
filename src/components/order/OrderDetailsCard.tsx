@@ -22,7 +22,13 @@ const OrderDetailsCard = async ({order,slug}: OrderDetailsCardProps) => {
                     <h1 className="text-lg font-semibold">Order Details</h1>
                     <p className="text-muted-foreground">Order #{slug}</p>
                 </div>
-                <Badge variant="destructive">Processing</Badge>
+                {order.isDelivered ? (
+                    <Badge>Delivered</Badge>
+                ) : order.isPaid ? (
+                    <Badge variant="secondary">Processing</Badge>
+                ) : (
+                    <Badge variant="destructive">Awaiting payment</Badge>
+                )}
             </div>
             <div className="grid gap-4 grid-cols-12 w-full">
                 <OrderShippingCard order={order} />

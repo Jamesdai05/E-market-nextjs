@@ -11,7 +11,13 @@ const OrderInfo = ({order}:{order:OrderData}) => {
       </div>
       <div className="info flex flex-col gap-2">
         <p>{order.paymentMethod}</p>
-        <Badge>unpaid</Badge>
+        {order.isPaid ? (
+          <Badge>
+            Paid{order.paidAt && ` on ${order.paidAt.toLocaleDateString()}`}
+          </Badge>
+        ) : (
+          <Badge variant="destructive">Not paid</Badge>
+        )}
       </div>
     </div>
   )

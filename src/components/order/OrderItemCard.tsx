@@ -36,7 +36,7 @@ const OrderItemCard = ({ item }: OrderItemCardProps) => {
                 </p>
             </div>
             <div className="shrink-0 text-right">
-                <span>${item.lineTotal}</span>
+                <span>${item.lineTotal.toFixed(2)}</span>
             </div>
         </article>
     );
