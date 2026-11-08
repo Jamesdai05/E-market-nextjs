@@ -10,19 +10,19 @@ const PaymentSummary = ({ order }: { order: OrderData }) => {
             <div className="col-span-12 space-y-4">
                 <div className="flex justify-between items-center">
                     <p className="text-muted-foreground">Items:</p>
-                    <p>${roundNum(itemsPrice)}</p>
+                    <p>${itemsPrice.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between items-center">
                     <p className="text-muted-foreground">Tax:</p>
-                    <p>${roundNum(taxPrice)}</p>
+                    <p>${taxPrice.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between items-center">
                     <p className="text-muted-foreground">Shipping:</p>
-                    <p>${roundNum(shippingPrice)}</p>
+                    <p>${shippingPrice.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between items-center">
                     <p className="Capitalize text-xl font-bold">Total</p>
-                    <p>${roundNum(totalPrice)}</p>
+                    <p>${totalPrice.toFixed(2)}</p>
                 </div>
             </div>
         </div>
