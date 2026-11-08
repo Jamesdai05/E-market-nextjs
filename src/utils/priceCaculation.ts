@@ -1,11 +1,9 @@
-import { number } from "zod";
-
 export const TaxRate = 0.1;
 export const freeShippingThreshold = 100;
 export const shippingFee = 10;
 
 
-const roundNum = (n: number) => Math.round(n * 100) / 100;
+export const roundNum = (n: number) => Math.round(n * 100) / 100;
 
 export type OrderPrice = {
   itemsPrice: number;

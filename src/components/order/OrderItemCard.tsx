@@ -1,14 +1,20 @@
 import Image from "next/image";
-import imgHolder from "@images/airpods.jpg"
+import type { OrderData } from "@/utils/actions/order/orderAction";
 
-const OrderItemCard = () => {
+type OrderItem = OrderData["orderItems"][number];
+
+type OrderItemCardProps = {
+    item: OrderItem;
+};
+
+const OrderItemCard = ({ item }: OrderItemCardProps) => {
     return (
-        <article className="flex items-center justify-between w-full p-4 rounded-lg py-2">
+        <article className="flex items-center justify-between w-full gap-4 p-4 rounded-lg py-2">
             {/* image */}
             <div className="relative size-20 shrink-0 overflow-hidden rounded-md bg-muted">
                 <Image
-                    src={imgHolder}
-                    alt="earphone"
+                    src={item.image}
+                    alt={item.name}
                     fill
                     sizes="80px"
                     className="object-cover"
@@ -23,14 +29,14 @@ const OrderItemCard = () => {
                 </div> */}
             </div>
             {/* Product Information */}
-            <div className="min-w-0 flex-1 space-y-1">
-                <p className="truncate font-medium">Product Name</p>
+            <div className="min-w-0 flex-1 space-x-1">
+                <p className="font-medium max-w-[20ch] wrap-break-word">{item.name}</p>
                 <p className="text-sm text-muted-foreground">
-                    Qty: 1 × $299.00
+                    Qty: {item.quantity} X ${Number(item.price).toFixed(2)}
                 </p>
             </div>
             <div className="shrink-0 text-right">
-                <span>$299.00</span>
+                <span>${item.lineTotal}</span>
             </div>
         </article>
     );

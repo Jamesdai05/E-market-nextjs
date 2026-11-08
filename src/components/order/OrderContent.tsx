@@ -1,10 +1,10 @@
 import type { OrderDetailsPageProps } from "@/app/orders/[slug]/page";
 import OrderDetailsCard from "./OrderDetailsCard";
 import OrderItemList from "./OrderItemList";
-import OrderPageHeader from "./OrderPageHeader";
 import { getOrderById } from "@/utils/actions/order/orderAction";
-import { getCurrentUser } from "@/lib/session";
 import { notFound } from "next/navigation";
+import PaymentSummary from "./PaymentSummary";
+import PayPalCheckout from "../paypal/PaypalCheckOut";
 
 const OrderContent = async ({ params }: OrderDetailsPageProps) => {
     const { slug } = await params;
@@ -12,14 +12,16 @@ const OrderContent = async ({ params }: OrderDetailsPageProps) => {
     // console.log(slug);
     const order = await getOrderById(slug);
     // const user=await getCurrentUser()
-    console.log(order);
+    // console.log(order);
     if (!order) notFound();
 
     return (
         <>
-            <OrderPageHeader params={params} />
-            <OrderDetailsCard order={order} />
+            {/* <OrderPageHeader params={params} /> */}
+            <OrderDetailsCard order={order} slug={slug} />
             <OrderItemList order={order} />
+            <PaymentSummary order={order} />
+            <PayPalCheckout />
         </>
     );
 };

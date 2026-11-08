@@ -2,7 +2,7 @@ import { Truck } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { OrderData } from "@/utils/actions/order/orderAction";
 
-const OrderSummaryCard = ({ order }: { order: OrderData }) => {
+const OrderShippingCard = ({ order }: { order: OrderData }) => {
   const { isDelivered } = order;
     // if (!("shippingName" in order)) return null;
     return (
@@ -17,28 +17,27 @@ const OrderSummaryCard = ({ order }: { order: OrderData }) => {
                     {order.shippingName}
                 </p>
                 <p>
-                    <span>Email:</span>
+                    <span className="text-muted-foreground">Email:</span>
                     {order.user.email}
                 </p>
-                <p>
+                <div>
                     <span className="text-muted-foreground">
-                        shipping address:
+                        Shipping address:
                     </span>
-                    {order.address}, {order.city}
-                    {order.country}
-                    {order.postalCode}
-                </p>
+                    <p className="italic">
+                        {order.address}, {order.city},{order.country},
+                        {order.postalCode}
+                    </p>
+                </div>
                 {isDelivered ? (
                     <Badge className="text-green-300 bg-green-100">
                         Delivered
                     </Badge>
                 ) : (
-                    <Badge variant="destructive">
-                        Not Delivered
-                    </Badge>
+                    <Badge variant="destructive">Not Delivered</Badge>
                 )}
             </div>
         </div>
     );
 };
-export default OrderSummaryCard;
+export default OrderShippingCard;

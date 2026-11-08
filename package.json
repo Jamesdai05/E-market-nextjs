@@ -11,6 +11,8 @@
   "dependencies": {
     "@base-ui/react": "^1.9.0",
     "@better-auth/prisma-adapter": "^1.7.13",
+    "@paypal/paypal-server-sdk": "^2.5.0",
+    "@paypal/react-paypal-js": "^10.6.1",
     "@prisma/adapter-pg": "^7.10.1",
     "@prisma/client": "^7.10.1",
     "better-auth": "^1.7.13",
@@ -49,6 +51,7 @@
   "allowScripts": {
     "unrs-resolver@1.12.2": true,
     "prisma@7.10.1": true,
-    "@prisma/engines@7.10.1": true
+    "@prisma/engines@7.10.1": true,
+    "esbuild@0.28.2": true
   }
 }
