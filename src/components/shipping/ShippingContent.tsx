@@ -8,7 +8,6 @@ import { saveShippingDetails } from "@/utils/actions/shippingAction";
 import { type ShippingState } from "@/utils/actions/shippingAction";
 import { toast } from "sonner";
 import Alert from "../error/Alert";
-import SectionTitle from "../global/sectionTitle/SectionTitle";
 
 type ShippingInfoType = {
     shippingName?: string;

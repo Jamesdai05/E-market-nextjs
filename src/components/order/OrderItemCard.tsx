@@ -19,20 +19,12 @@ const OrderItemCard = ({ item }: OrderItemCardProps) => {
                     sizes="80px"
                     className="object-cover"
                 />
-                {/* <div className="flex flex-col gap-2">
-                    <p className="line-clamp-1 font-medium text-black">
-                        Product Name
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                        Qty:1 X 299.00
-                    </p>
-                </div> */}
             </div>
             {/* Product Information */}
             <div className="min-w-0 flex-1 space-x-1">
                 <p className="font-medium max-w-[20ch] wrap-break-word">{item.name}</p>
                 <p className="text-sm text-muted-foreground">
-                    Qty: {item.quantity} X ${Number(item.price).toFixed(2)}
+                    Qty: {item.quantity} X ${item.price.toFixed(2)}
                 </p>
             </div>
             <div className="shrink-0 text-right">

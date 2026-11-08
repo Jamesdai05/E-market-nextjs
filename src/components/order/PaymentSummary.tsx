@@ -6,7 +6,7 @@ const PaymentSummary = ({ order }: { order: OrderData }) => {
 
     return (
         <div className="grid w-full gap-6 border rounded-lg p-4">
-            <h2 className="text-lg font-bold">PaymentSummary</h2>
+            <h2 className="text-lg font-bold">Payment Summary</h2>
             <div className="col-span-12 space-y-4">
                 <div className="flex justify-between items-center">
                     <p className="text-muted-foreground">Items:</p>
@@ -21,7 +21,7 @@ const PaymentSummary = ({ order }: { order: OrderData }) => {
                     <p>${shippingPrice.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between items-center">
-                    <p className="Capitalize text-xl font-bold">Total</p>
+                    <p className="text-xl font-bold">Total</p>
                     <p>${totalPrice.toFixed(2)}</p>
                 </div>
                 <div className="flex w-full">

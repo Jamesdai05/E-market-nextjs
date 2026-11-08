@@ -23,7 +23,7 @@ const getCurrentUser = async (redirectTo?: string) => {
     if (!session) {
         // to remeber where the user would like to go,
         const loginUrl = redirectTo
-            ? `/login?redict=${encodeURI(redirectTo)}`
+            ? `/login?redirect=${encodeURIComponent(redirectTo)}`
             : "/login";
         redirect(loginUrl);
     }

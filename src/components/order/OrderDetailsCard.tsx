@@ -2,19 +2,13 @@ import OrderInfo from "@/components/order/OrderInfo";
 import OrderShippingCard from "@/components/order/OrderShippingCard";
 import { OrderData } from "@/utils/actions/order/orderAction";
 import { Badge } from "@/components/ui/badge";
-import { notFound } from "next/navigation";
 
 type OrderDetailsCardProps = {
   slug: string;
   order: OrderData;
 }
 
-const OrderDetailsCard = async ({order,slug}: OrderDetailsCardProps) => {
-    // const { slug } = await params;
-    // const order = await getOrderById(slug);
-
-    if (!order) notFound();
-
+const OrderDetailsCard = ({order,slug}: OrderDetailsCardProps) => {
     return (
         <>
             <div className="flex justify-between items-center border rounded-lg p-4">

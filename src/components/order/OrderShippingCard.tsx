@@ -4,7 +4,6 @@ import { OrderData } from "@/utils/actions/order/orderAction";
 
 const OrderShippingCard = ({ order }: { order: OrderData }) => {
   const { isDelivered } = order;
-    // if (!("shippingName" in order)) return null;
     return (
         <div className="flex flex-col col-span-12 md:col-span-6 border rounded-lg p-4">
             <div className="flex gap-2 items-center">
@@ -13,19 +12,25 @@ const OrderShippingCard = ({ order }: { order: OrderData }) => {
             </div>
             <div className="flex flex-col">
                 <p>
-                    <span className="text-muted-foreground">Name:</span>
+                    <span className="text-muted-foreground">Name:</span>{" "}
                     {order.shippingName}
                 </p>
                 <p>
-                    <span className="text-muted-foreground">Email:</span>
+                    <span className="text-muted-foreground">Email:</span>{" "}
                     {order.user.email}
                 </p>
+                {order.phone && (
+                    <p>
+                        <span className="text-muted-foreground">Phone:</span>{" "}
+                        {order.phone}
+                    </p>
+                )}
                 <div>
                     <span className="text-muted-foreground">
                         Shipping address:
                     </span>
                     <p className="italic">
-                        {order.address}, {order.city},{order.country},
+                        {order.address}, {order.city}, {order.country}{" "}
                         {order.postalCode}
                     </p>
                 </div>
