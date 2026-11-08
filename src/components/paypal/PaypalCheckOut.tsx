@@ -1,28 +1,21 @@
 "use client";
 
-import {
-    PayPalProvider,
-    PayPalOneTimePaymentButton,
-} from "@paypal/react-paypal-js/sdk-v6";
+import { PayPalProvider } from "@paypal/react-paypal-js/sdk-v6";
+import PayPalButton from "./PaypalButton";
 
-const PayPalCheckout = () => {
+type PayPalCheckoutProps = {
+    orderId: string;
+};
+
+const PayPalCheckout = ({ orderId }: PayPalCheckoutProps) => {
     return (
         <PayPalProvider
             clientId={process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!}
             environment="sandbox"
+            components={["paypal-payments"]}
             pageType="checkout"
         >
-            <PayPalOneTimePaymentButton
-                createOrder={async () => {
-                    // Call your Server Action to create
-                    // a PayPal order and return its ID.
-                    throw new Error("Create order not implemented");
-                }}
-                onApprove={async () => {
-                    // Call your Server Action to capture payment.
-                    throw new Error("Capture order not implemented");
-                }}
-            />
+            <PayPalButton orderId={orderId} />
         </PayPalProvider>
     );
 };

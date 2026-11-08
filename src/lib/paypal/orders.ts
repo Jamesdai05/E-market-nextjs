@@ -1,3 +1,5 @@
+import "server-only";
+
 import {
     OrdersController,
     CheckoutPaymentIntent,
@@ -13,7 +15,7 @@ export async function createPayPalOrder(amount: string): Promise<string> {
             purchaseUnits: [
                 {
                     amount: {
-                        currencyCode: "USD",
+                        currencyCode: "SGD",
                         value: amount,
                     },
                 },
@@ -28,7 +30,7 @@ export async function createPayPalOrder(amount: string): Promise<string> {
     return result.id;
 }
 
-export async function capturePayPalOrder(orderId: string): Promise<unknown> {
+export async function capturePayPalOrder(orderId: string) {
     const { result } = await ordersController.captureOrder({ id: orderId });
     return result;
 }
