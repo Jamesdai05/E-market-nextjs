@@ -52,7 +52,7 @@ const PaymentSection = ({
                 </legend>
                 {methods.map((method) => (
                     <Label
-                        htmlFor={method.value}
+                        htmlFor={`payment-${method.value}`}
                         key={method.label}
                         className="flex items-center gap-2 cursor-pointer rounded-lg border p-4 text-base hover:bg-accent"
                     >
@@ -60,7 +60,8 @@ const PaymentSection = ({
                             type="radio"
                             value={method.value}
                             name="paymentMethod"
-                            id={method.value}
+                            // prefixed: id="paypal" would become window.paypal and break the PayPal SDK
+                            id={`payment-${method.value}`}
                             className="size-4 accent-primary"
                             defaultChecked={method.value === selected}
                         />
