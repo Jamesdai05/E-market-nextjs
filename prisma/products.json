@@ -73,7 +73,7 @@
     },
     {
         "name": "Xiaomi Redmi Pad Pro (8GB RAM + 256GB Storage)",
-        "sku" : "XIAO-ELEC-GEN-2749"
+        "sku" : "XIAO-ELEC-GEN-2749",
         "image": "/images/xiaomi.png",
         "description": "Xiaomi Redmi Pad Pro WiFi (8GB RAM + 256GB Storage)",
         "brand": "Xiao Mi",

@@ -8,7 +8,6 @@ import {
 import { prisma } from "@/lib/prisma";
 import { getCurrentSession } from "@/lib/session";
 import { revalidatePath } from "next/cache";
-import { success } from "zod";
 
 export async function createPaypalOrder(orderId: string): Promise<{ id: string }> {
     const session = await getCurrentSession();
@@ -127,6 +126,11 @@ export async function captureOrder(orderId: string, paypalOrderId: string) {
             paidAt: new Date(),
             paymentStatus: "COMPLETED",
             paymentUpdateTime: new Date(),
+            // the PayPal account that paid (payer is PayPal's older field for the same thing)
+            paymentEmail:
+                result.paymentSource?.paypal?.emailAddress ??
+                result.payer?.emailAddress ??
+                null,
         },
     });
 
