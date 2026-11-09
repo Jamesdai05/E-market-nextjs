@@ -16,10 +16,24 @@ const initialState: PaymentState = {
 };
 
 // typed against the schema, so a value it doesn't accept is a compile error
-const methods: { value: PaymentMethod; label: string; icon: LucideIcon }[] = [
-    { value: "creditcard", label: "Credit card", icon: CreditCard },
-    { value: "paypal", label: "PayPal", icon: Wallet },
-    { value: "wechat", label: "WeChat Pay", icon: Wallet },
+const methods: {
+    value: PaymentMethod;
+    label: string;
+    icon: LucideIcon;
+    description: string;
+}[] = [
+    {
+        value: "paypal",
+        label: "PayPal",
+        icon: Wallet,
+        description: "PayPal balance or card via PayPal",
+    },
+    {
+        value: "stripe",
+        label: "Card, WeChat Pay or Alipay",
+        icon: Wallet,
+        description: "Secure checkout by Stripe",
+    },
 ];
 
 const PaymentSection = ({

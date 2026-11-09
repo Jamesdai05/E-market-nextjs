@@ -36,7 +36,7 @@ export const shippingInfoSchema = z.object({
 
 
 export const paymentSchema = z.object({
-  paymentMethod: z.enum(["paypal","wechat","creditcard"]),
+  paymentMethod: z.enum(["paypal","stripe"]),
 })
 
 // reuse the schema above

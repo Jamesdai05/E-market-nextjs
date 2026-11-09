@@ -24,55 +24,55 @@ export async function startStripeCheckOut(orderId: string):Promise<StripeCheckou
 
     if (!order)return{success:false, message:"Order not found,please try again."};
 
-    // reuse an open session (double click / two tabs) instead of creating a second one
-    if (
-        "stripeSessionId" in order &&
-        typeof order.stripeSessionId === "string" &&
-        order.stripeSessionId
-    ) {
-        const existing = await stripe.checkout.sessions.retrieve(
-            order.stripeSessionId,
-        );
-        if (existing.status === "open" && existing.url) redirect(existing.url);
-  };
 
-  const appUrl=process.env.NEXT_PUBLIC_APP_URL!
-
-  // create a stripe session
-  const checkout = await stripe.checkout.sessions.create({
-      mode: "payment",
-      customer_email: session.user.email,
-      line_items: [
-          {
-              quantity: 1,
-              price_data: {
-                  currency: "sgd",
-                  unit_amount: order.totalPrice.mul(100).toNumber(), // cents, from YOUR database
-                  product_data: {
-                      name: `Mini-Mart order ${order.id.slice(0, 8).toUpperCase()}`,//to indicate the order which is paid.
-                  },
-              },
-          },
-      ],
-      metadata: { orderId: order.id }, // links the payment back to your order
-      success_url: `${appUrl}/orders/${order.id}?paid=stripe`,
-    cancel_url: `${appUrl}/orders/${order.id}`,
-  });
 
   try {
-    await prisma.order.update({
-    where: { id: order.id },
-    data: {
-      stripeCheckoutSessionId: checkout.id,
-      paymentStatus:"CREATED"
-    },
-    })
-    return { success: true, url: checkout.url! };
+      // reuse an open session (double click / two tabs) instead of creating a second one
+      if (
+          "stripeCheckoutSessionId" in order &&
+          typeof order.stripeCheckoutSessionId === "string" &&
+          order.stripeCheckoutSessionId
+      ) {
+          const existing = await stripe.checkout.sessions.retrieve(
+              order.stripeCheckoutSessionId,
+          );
+          if (existing.status === "open" && existing.url)
+              return { success: true, url: existing.url };
+      }
+
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL!;
+
+      // create a stripe session
+      const checkout = await stripe.checkout.sessions.create({
+          mode: "payment",
+          customer_email: session.user.email,
+          line_items: [
+              {
+                  quantity: 1,
+                  price_data: {
+                      currency: "sgd",
+                      unit_amount: order.totalPrice.mul(100).toNumber(), // cents, from YOUR database
+                      product_data: {
+                          name: `Mini-Mart order ${order.id.slice(0, 8).toUpperCase()}`, //to indicate the order which is paid.
+                      },
+                  },
+              },
+          ],
+          metadata: { orderId: order.id }, // links the payment back to your order
+          success_url: `${appUrl}/orders/${order.id}?paid=stripe`,
+          cancel_url: `${appUrl}/orders/${order.id}`,
+      });
+
+      await prisma.order.update({
+          where: { id: order.id },
+          data: {
+              stripeCheckoutSessionId: checkout.id,
+              paymentStatus: "CREATED",
+          },
+      });
+      return { success: true, url: checkout.url! };
   } catch (err) {
     console.error("Error in stripe payment", err);
     return {success:false,message:"Could not start payment, please try again."}
   }
-
-
-  // redirect(checkout.url!)
 }
