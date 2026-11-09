@@ -24,7 +24,7 @@ const Message = ({ type="info", className, children }:MessageProp) => {
   return (
     <div
       role={type === "error" ? "alert" : "status"}
-      className={cn("rounded-lg border p-4 text-sm font-medium",className,MessageStyleProps[type])}>{children}</div>
+      className={cn("rounded-lg border p-4 text-md font-medium w-full",className,MessageStyleProps[type])}>{children}</div>
   )
 }
 export default Message

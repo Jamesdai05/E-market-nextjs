@@ -1,6 +1,7 @@
 import { OrderData } from "@/utils/actions/order/orderAction";
 import PayPalButton from "@/components/paypal/PaypalButton";
 import PaypalClientProvider from "../provider/PaypalClientProvider";
+import { StripeCheckoutButton } from "../stripe/StripeCheckoutButton";
 
 const PaymentSummary = ({ order }: { order: OrderData }) => {
     const { itemsPrice, taxPrice, totalPrice, shippingPrice } = order;
@@ -30,6 +31,9 @@ const PaymentSummary = ({ order }: { order: OrderData }) => {
                         <PaypalClientProvider>
                             <PayPalButton orderId={order.id} />
                         </PaypalClientProvider>
+                    )}
+                    {!order.isPaid && order.paymentMethod === "stripe" && (
+                        <StripeCheckoutButton orderId={order.id} />
                     )}
                 </div>
             </div>

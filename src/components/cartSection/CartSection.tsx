@@ -1,7 +1,3 @@
-// import { getUserCart } from "@/utils/actions/carts";
-// import { ShoppingCart } from "lucide-react";
-// import Message from "../global/Message";
-// import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import QuantitySelect from "./QuantitySelect";
