@@ -29,8 +29,6 @@ const NavigationLinks = ({
     links: NavLink[];
     pathname: string;
 }) => {
-
-
     // const navLinks = [
     //     { label: "Home", href: "/" },
     //     { label: "Products", href: "/products" },
@@ -44,7 +42,7 @@ const NavigationLinks = ({
                     render={
                         <Button
                             variant="ghost"
-                            className="text-nav-foreground hover:bg-nav-accent hover:text-nav-foreground data-[popup-open]:bg-nav-accent"
+                            className="text-nav-foreground hover:bg-nav-accent hover:text-nav-foreground data-popup-open:bg-nav-accent"
                         />
                     }
                 >

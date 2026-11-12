@@ -3,8 +3,16 @@ import Navbar from "./Navbar";
 
 // server component: reads the session, then passes plain data to the client Navbar
 const NavBarServer = async () => {
-  const user = await getOptionalUser();
+    const user = await getOptionalUser();
 
-  return <Navbar name={user?.name ?? null} />;
+    return (
+        <Navbar
+            user={
+                user
+                    ? { name: user.name, isAdmin: user.role === "admin" }
+                    : null
+            }
+        />
+    );
 };
 export default NavBarServer;

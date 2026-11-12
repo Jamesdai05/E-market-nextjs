@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "../ui/button";
 import { Menu, ShoppingBasket } from "lucide-react";
 import { isPathActive } from "./NavigationLinks";
-
+import { navLinks,adminLinks } from "@/lib/utils";
 import SearchComponent from "./SearchComponent";
 
 import {
@@ -33,17 +33,21 @@ const authButtonClass = cn(
     "bg-nav text-nav-foreground border-nav-foreground/50 hover:bg-nav-foreground hover:text-nav",
 );
 
-const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "Products", href: "/products" },
-    { label: "About", href: "/about" },
-    { label: "Profile", href: "/profile" },
-];
+export type NavbarUser = {
+    name: string;
+    isAdmin: boolean;
+};
 
-const Navbar = ({ name }: { name: string | null }) => {
+type NavbarProps = { user: NavbarUser | null };
+
+
+
+const Navbar = ({ user }: NavbarProps) => {
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
-    const { logOut, isPending: isLoggingOut } = useLogOut();
+  const { logOut, isPending: isLoggingOut } = useLogOut();
+
+  const links = user?.isAdmin ? adminLinks : navLinks;
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-nav text-nav-foreground shadow-md shadow-nav-accent/20">
@@ -67,10 +71,13 @@ const Navbar = ({ name }: { name: string | null }) => {
                 {/* desktop authentication */}
                 <div className="hidden shrink-0 items-center gap-2 max-w-md md:flex">
                     <Theme />
-                    <NavigationLinks links={navLinks} pathname={pathname} />
+                    <NavigationLinks
+                        links={links}
+                        pathname={pathname}
+                    />
                     <Cart />
-                    {name ? (
-                        <UserName name={name} />
+                    {user?.name ? (
+                        <UserName name={user.name} />
                     ) : (
                         <Link
                             href="/login"
@@ -83,16 +90,6 @@ const Navbar = ({ name }: { name: string | null }) => {
                             Login
                         </Link>
                     )}
-                    {/* <Link
-                        href="/register"
-                        className={cn(
-                            buttonVariants({ variant: "outline" }),
-                            "bg-nav text-nav-foreground border-nav-foreground/50",
-                            "hover:bg-nav-foreground hover:text-nav",
-                        )}
-                    >
-                        Register
-                    </Link> */}
                 </div>
                 {/* mobile Navigation */}
                 <div className="flex items-center gap-2 md:hidden">
@@ -128,7 +125,7 @@ const Navbar = ({ name }: { name: string | null }) => {
                             </SheetHeader>
 
                             <div className="flex mt-4 flex-col gap-2 px-2">
-                                {navLinks.map((link) => {
+                                {links.map((link) => {
                                     const active = isPathActive(
                                         pathname,
                                         link.href,
@@ -137,6 +134,7 @@ const Navbar = ({ name }: { name: string | null }) => {
                                         <Link
                                             key={link.href}
                                             href={link.href}
+                                            onClick={() => setOpen(false)}
                                             className={cn(
                                                 navLinkClass,
                                                 active && navLinkActiveClass,
@@ -146,7 +144,7 @@ const Navbar = ({ name }: { name: string | null }) => {
                                         </Link>
                                     );
                                 })}
-                                {name ? (
+                                {user?.name ? (
                                     <Button
                                         type="button"
                                         variant="outline"
@@ -156,7 +154,7 @@ const Navbar = ({ name }: { name: string | null }) => {
                                     >
                                         {isLoggingOut
                                             ? "Logging out…"
-                                            : `Log Out (${name})`}
+                                            : `Log Out (${user.name})`}
                                     </Button>
                                 ) : (
                                     <Link
@@ -166,12 +164,6 @@ const Navbar = ({ name }: { name: string | null }) => {
                                         Login
                                     </Link>
                                 )}
-                                {/* <Link
-                                    href="/register"
-                                    className={authButtonClass}
-                                >
-                                    Register
-                                </Link> */}
                             </div>
                         </SheetContent>
                     </Sheet>
