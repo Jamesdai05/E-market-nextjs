@@ -3,7 +3,7 @@ import CartSummary from "./CartSummary";
 import SectionTitle from "../global/sectionTitle/SectionTitle";
 import { getUserCart } from "@/utils/actions/cart/carts";
 import { getCurrentUser } from "@/lib/session";
-import Message from "../global/Message";
+import Emptylist from "../Emptylist/Emptylist";
 
 const CartContent = async () => {
     await getCurrentUser();
@@ -15,7 +15,7 @@ const CartContent = async () => {
     return (
         <>
         {cart.items.length === 0 ? (
-          <div className="col-span-12"><Message>Your cart is empty.</Message></div>)
+          <div className="col-span-12"><Emptylist heading="Your cart is empty." className="text-background bg-nav p-2 rounded-md"/></div>)
 
           : (
             <>

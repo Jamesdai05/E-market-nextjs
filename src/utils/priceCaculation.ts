@@ -22,4 +22,5 @@ export const calcPrice = (itemsPrice: number): OrderPrice => {
   return { itemsPrice: items, shippingPrice, taxPrice, totalPrice };
 };
 
-export const itemsPrice = (quantity:number, unitPrice:number) => quantity * unitPrice;
+export const itemsPrice = (quantity: number, unitPrice: number) => quantity * unitPrice;
+export const formatPrice=(n:number)=>new Intl.NumberFormat("en-SG",{style:"currency",currency:"SGD"}).format(n)

@@ -3,6 +3,7 @@ import Loader from "@/components/global/Loader";
 import ProfileSection from "@/components/profile/ProfileSection";
 import SectionTitle from "@/components/global/sectionTitle/SectionTitle";
 import CartSummary from "@/components/cartSection/CartSummary";
+import Orderlist from "@/components/order/Orderlist";
 
 const ProfilePage = async () => {
     return (
@@ -17,7 +18,7 @@ const ProfilePage = async () => {
                     </div>
                     <div className="orders md:col-span-7">
                         <Suspense fallback={<Loader />}>
-                            <CartSummary />
+                            <Orderlist />
                         </Suspense>
                     </div>
                 </div>

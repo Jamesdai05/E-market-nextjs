@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import PasswordInput from "../passwordInput/PasswordInput";
 import Link from "next/link";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { registration } from "@/utils/actions/auth/registration";
 import { type RegistrationState } from "@/utils/actions/auth/registration";
 import Alert from "../error/Alert";
@@ -25,17 +25,21 @@ const RegisterationForm = () => {
     );
 
     const router = useRouter();
+    // the last result this effect acted on, so a page restored by cacheComponents
+    // doesn't replay an old success (redirect + toast) when you come back to it
+    const handledState = useRef<RegistrationState | null>(null);
 
     useEffect(() => {
         // direct return to prevent showing the message
-        if (!state.message) return;
+        if (!state.message || handledState.current === state) return;
+        handledState.current = state;
         if (state.success) {
             toast.success("Account has been successfully created!");
             router.replace("/login");
         } else {
             toast.error(state.message);
         }
-    }, [state]);
+    }, [state, router]);
 
     return (
         <form

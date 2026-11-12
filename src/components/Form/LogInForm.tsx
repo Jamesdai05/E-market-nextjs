@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import PasswordInput from "../passwordInput/PasswordInput";
 import Link from "next/link";
 import { type LoginState } from "@/utils/actions/auth/loginAction";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { login } from "@/utils/actions/auth/loginAction";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -21,9 +21,14 @@ const initalState: LoginState = {
 const LogInForm = ({redirectTo="/profile"}:{redirectTo?:string}) => {
     const [state, formAction, isPending] = useActionState(login, initalState);
     const router = useRouter();
+    // the last result this effect acted on. With cacheComponents, Next keeps this
+    // page alive after navigating away and re-runs effects when it comes back, so
+    // without this an old { success: true } would redirect again (login loop after logout)
+    const handledState = useRef<LoginState | null>(null);
 
     useEffect(() => {
-        if (!state.message) return;
+        if (!state.message || handledState.current === state) return;
+        handledState.current = state;
         if (state.success) {
             toast.success("Login successfully");
             router.replace(redirectTo);

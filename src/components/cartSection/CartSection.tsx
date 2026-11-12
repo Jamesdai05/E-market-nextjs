@@ -3,25 +3,9 @@ import Image from "next/image";
 import QuantitySelect from "./QuantitySelect";
 import type { CartItem } from "@/utils/actions/cart/carts";
 import RemoveButton from "./RemoveButton";
+import { formatPrice } from "@/utils/priceCaculation";
 
 const CartSection = ({ items }: { items: CartItem[] }) => {
-    // const data = await getUserCart();
-    // const items = data.cart?.items ?? [];
-
-    // if (items.length === 0)
-    //     return (
-    //         <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed">
-    //             <ShoppingCart className="size-10 text-muted-foreground" />
-    //             <Message type="info">Your cart is empty.</Message>
-    //             <Button
-    //                 render={<Link href="/products" />}
-    //                 className="bg-nav text-nav-foreground"
-    //             >
-    //                 Continue shopping
-    //             </Button>
-    //         </div>
-    //     );
-
     return (
         <ul className="divide-y rounded-xl border bg-card">
             {items.map((item) => (
@@ -61,7 +45,8 @@ const CartSection = ({ items }: { items: CartItem[] }) => {
                     />
                     {/* line total */}
                     <p className="w-20 text-right font-semibold">
-                        ${item.lineTotal.toFixed(2)}
+                        {/* ${item.lineTotal.toFixed(2)} */}$
+                        {formatPrice(item.lineTotal)}
                     </p>
                     <RemoveButton
                         itemId={item.id}
