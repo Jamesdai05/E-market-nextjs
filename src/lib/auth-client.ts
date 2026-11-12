@@ -1,5 +1,5 @@
 import { createAuthClient } from "better-auth/react";
-export const authClient = createAuthClient({
-    /** The base URL of the server (optional if you're using the same domain) */
-    baseURL: process.env.BETTER_AUTH_URL,
-});
+
+// no baseURL: the auth API lives on this same app (/api/auth), so the client
+// uses the current origin. BETTER_AUTH_URL is server-only and is undefined here.
+export const authClient = createAuthClient();

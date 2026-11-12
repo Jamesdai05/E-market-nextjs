@@ -17,6 +17,7 @@ import {
 } from "../ui/sheet";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useLogOut } from "./useLogOut";
 import NavigationLinks from "./NavigationLinks";
 import Cart from "./Cart";
 import Theme from "./Theme";
@@ -42,6 +43,7 @@ const navLinks = [
 const Navbar = ({ name }: { name: string | null }) => {
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
+    const { logOut, isPending: isLoggingOut } = useLogOut();
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-nav text-nav-foreground shadow-md shadow-nav-accent/20">
@@ -144,9 +146,26 @@ const Navbar = ({ name }: { name: string | null }) => {
                                         </Link>
                                     );
                                 })}
-                                <Link href="/login" className={authButtonClass}>
-                                    Login
-                                </Link>
+                                {name ? (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        className={authButtonClass}
+                                        disabled={isLoggingOut}
+                                        onClick={logOut}
+                                    >
+                                        {isLoggingOut
+                                            ? "Logging out…"
+                                            : `Log Out (${name})`}
+                                    </Button>
+                                ) : (
+                                    <Link
+                                        href="/login"
+                                        className={authButtonClass}
+                                    >
+                                        Login
+                                    </Link>
+                                )}
                                 {/* <Link
                                     href="/register"
                                     className={authButtonClass}
