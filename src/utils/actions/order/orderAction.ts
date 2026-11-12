@@ -2,41 +2,45 @@ import "server-only";
 import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import { getCurrentSession } from "@/lib/session";
+import { orderInclude, serializeOrder } from "@/utils/serializationOrder";
 
+export const getOrderById = cache(async (orderId: string) => {
+    const session = await getCurrentSession();
 
+    if (!session) return null;
 
-export const getOrderById=cache(async(orderId: string)=>{
-  const session = await getCurrentSession();
+    // database errors are not caught here, so they show an error page instead of a 404
+    const order = await prisma.order.findFirst({
+        where: { id: orderId,userId:session.user.id },
+        include: {
+            orderItems: { orderBy: { createdAt: "asc" } },
+            user: { select: { name: true, email: true } },
+        },
+    });
 
-  if (!session) return null;
+    if (!order) return null;
 
-  // database errors are not caught here, so they show an error page instead of a 404
-  const order = await prisma.order.findUnique({
-    where: { id: orderId },
-    include: {
-      orderItems: { orderBy: { createdAt: "asc" } },
-      user:{select:{name:true,email:true}},
-    }
-  })
+    //check the ownership
+    const checkIsOwner = session.user.id === order.userId;
+    if (!checkIsOwner) return null;
 
-  if (!order) return null
+    return serializeOrder(order);
+});
 
-  //check the ownership
-  const checkIsOwner = session.user.id === order.userId;
-  if (!checkIsOwner) return null;
+export const getOrdersByUser = cache(async () => {
+    const session = await getCurrentSession();
+    if (!session) return null;
 
-  return {
-    ...order,
-    itemsPrice: order.itemsPrice.toNumber(),
-    taxPrice: order.taxPrice.toNumber(),
-    shippingPrice: order.shippingPrice.toNumber(),
-    totalPrice: order.totalPrice.toNumber(),
-    orderItems: order.orderItems.map(item => ({
-      ...item,
-      price: item.price.toNumber(),
-      lineTotal:item.price.toNumber() * item.quantity,
-    }))
-  }
-})
+    const orders = await prisma.order.findMany({
+        where: { userId: session.user.id },
+        include: orderInclude,
+        orderBy: { createdAt: "desc" },
+    });
+    return orders.map(serializeOrder);
+});
 
 export type OrderData = NonNullable<Awaited<ReturnType<typeof getOrderById>>>;
+
+export type OrdersData = NonNullable<
+    Awaited<ReturnType<typeof getOrdersByUser>>
+>;
