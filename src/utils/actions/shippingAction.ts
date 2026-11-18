@@ -11,6 +11,7 @@ export type ShippingState = {
   message: string;
   success: boolean;
   errors?: Record<string, string[]>;
+  values?: Record<string, string>;
 };
 
 export const saveShippingDetails = async(
@@ -23,12 +24,16 @@ export const saveShippingDetails = async(
   if (!session) return { success: false, message: "Please login first" };
 
   // read and validate the data
+  const values = {
+    shippingName: String(formData.get("shippingName") ?? ""),
+    address: String(formData.get("address") ?? ""),
+    city: String(formData.get("city") ?? ""),
+    postalCode: String(formData.get("postalCode") ?? ""),
+    country: String(formData.get("country") ?? ""),
+  };
+
   const result = shippingInfoSchema.safeParse({
-    shippingName:formData.get("shippingName"),
-    address: formData.get("address"),
-    city: formData.get("city"),
-    postalCode: formData.get("postalCode"),
-    country: formData.get("country"),
+    ...values,
   });
 
   if (!result.success) {
@@ -36,6 +41,7 @@ export const saveShippingDetails = async(
       success: false,
       message: "Please check the highlighted fields",
       errors: z.flattenError(result.error).fieldErrors,
+      values,
     }
   }
 

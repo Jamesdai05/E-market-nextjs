@@ -1,10 +1,14 @@
 "use server";
 
+import { createPayPalOrder, capturePayPalOrder } from "@/lib/paypal/orders";
 import {
-    createPayPalOrder,
-    capturePayPalOrder,
-    PAYPAL_CURRENCY,
-} from "@/lib/paypal/orders";
+    recordPayPalPayment,
+    type PayPalPaymentOutcome,
+} from "@/lib/paypal/recordPayment";
+import {
+    isPayPalPaymentLocked,
+    PAYPAL_PAYMENT_LOCKED_STATUSES,
+} from "@/lib/paypal/status";
 import { prisma } from "@/lib/prisma";
 import { getCurrentSession } from "@/lib/session";
 import { revalidatePath } from "next/cache";
@@ -28,6 +32,12 @@ export async function createPaypalOrder(orderId: string): Promise<{ id: string }
         throw new Error("Order is not found!");
     }
 
+    // PayPal may hold money for this order (failed verification or pending
+    // capture). Starting a new payment would overwrite paymentId, the only record of it.
+    if (isPayPalPaymentLocked(order.paymentStatus)) {
+        throw new Error("This order has a payment in progress. Please contact us.");
+    }
+
     // 3. Use trusted amount from Prisma
     const amount = order.totalPrice.toFixed(2);
     if (order.totalPrice.lte(0)) {
@@ -38,19 +48,40 @@ export async function createPaypalOrder(orderId: string): Promise<{ id: string }
     const paypalOrderId = await createPayPalOrder(amount);
 
     //5. save the paypal orderId to the database
-    await prisma.order.update({
-        where: { id: order.id },
+    // Conditions repeated here so a capture that failed (or succeeded) while
+    // the PayPal order was being created isn't overwritten. paymentStatus is
+    // nullable, and `notIn` alone would skip NULL rows, hence the OR.
+    const { count } = await prisma.order.updateMany({
+        where: {
+            id: order.id,
+            isPaid: false,
+            OR: [
+                { paymentStatus: null },
+                {
+                    paymentStatus: {
+                        notIn: [...PAYPAL_PAYMENT_LOCKED_STATUSES],
+                    },
+                },
+            ],
+        },
         data: {
             paymentId: paypalOrderId,
             paymentStatus: "CREATED",
         },
     });
 
+    if (count === 0) {
+        throw new Error("Order can no longer be paid");
+    }
+
     // 6. Return PayPal order ID
     return { id: paypalOrderId };
 }
 
-export async function captureOrder(orderId: string, paypalOrderId: string) {
+export async function captureOrder(
+    orderId: string,
+    paypalOrderId: string,
+): Promise<{ status: Exclude<PayPalPaymentOutcome, "failed"> }> {
     //1. authentication
     const session = await getCurrentSession();
 
@@ -73,69 +104,21 @@ export async function captureOrder(orderId: string, paypalOrderId: string) {
     }
 
     if (order.isPaid) {
-        return { success: true };
+        return { status: "paid" };
     }
 
     // 3. Capture through PayPal
     const result = await capturePayPalOrder(paypalOrderId);
 
-    // 4. Extract capture information
-    const captures =
-        result.purchaseUnits?.flatMap(
-            (unit) => unit.payments?.captures ?? [],
-        ) ?? [];
-
-    const capture = captures[0];
-
-    // 5. Verify actual payment
-    if (
-        String(result.status) !== "COMPLETED" ||
-        captures.length !== 1 ||
-        String(capture?.status) !== "COMPLETED" ||
-        capture?.amount?.currencyCode !== PAYPAL_CURRENCY ||
-        capture.amount.value !== order.totalPrice.toFixed(2)
-    ) {
-        // PayPal may already have taken the money, so record the failure
-        // to find (and refund) this payment later instead of losing it
-        await prisma.order.update({
-            where: { id: order.id },
-            data: {
-                paymentStatus: "VERIFICATION_FAILED",
-                paymentUpdateTime: new Date(),
-            },
-        });
-        console.error("PayPal payment verification failed", {
-            orderId: order.id,
-            paypalOrderId,
-            status: result.status,
-            capture,
-        });
+    // 4. Verify the payment and record the result
+    // (shared with the PayPal webhook, so both apply the same rules)
+    const status = await recordPayPalPayment(order, paypalOrderId, result);
+    if (status === "failed") {
         throw new Error("PayPal payment verification failed");
     }
 
-    // 6. Mark order paid in Prisma
-    // (isPaid: false means a second, simultaneous capture request changes nothing)
-    await prisma.order.updateMany({
-        where: {
-            id: order.id,
-            paymentId: paypalOrderId,
-            isPaid: false,
-        },
-        data: {
-            isPaid: true,
-            paidAt: new Date(),
-            paymentStatus: "COMPLETED",
-            paymentUpdateTime: new Date(),
-            // the PayPal account that paid (payer is PayPal's older field for the same thing)
-            paymentEmail:
-                result.paymentSource?.paypal?.emailAddress ??
-                result.payer?.emailAddress ??
-                null,
-        },
-    });
-
-    // 7. Refresh order page
+    // 5. Refresh order page
     revalidatePath(`/orders/${orderId}`);
 
-    return {success:true};
+    return { status };
 }

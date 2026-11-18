@@ -3,6 +3,7 @@ import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import { getCurrentSession } from "@/lib/session";
 import { orderInclude, serializeOrder } from "@/utils/serializationOrder";
+import { redirect } from "next/navigation";
 
 export const getOrderById = cache(async (orderId: string) => {
     const session = await getCurrentSession();
@@ -38,6 +39,22 @@ export const getOrdersByUser = cache(async () => {
     });
     return orders.map(serializeOrder);
 });
+
+
+export const getAllOrderByAdmin = cache(async () => {
+  const session = await getCurrentSession();
+
+  if(!session) redirect("/login");
+
+  if (session.user.role !== "admin") redirect("/");
+
+  const orders = await prisma.order.findMany({
+    orderBy: { createdAt: "desc" },
+    include: {
+      user: { select: { name: true, email: true } },
+    },
+  });
+})
 
 export type OrderData = NonNullable<Awaited<ReturnType<typeof getOrderById>>>;
 

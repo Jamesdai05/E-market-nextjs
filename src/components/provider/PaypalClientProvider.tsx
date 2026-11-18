@@ -3,9 +3,15 @@
 import { ReactNode } from "react";
 import { PayPalProvider } from "@paypal/react-paypal-js/sdk-v6";
 
-const PaypalClientProvider = ({children}:{children:ReactNode}) => {
-
-  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID
+// clientId comes from a server component: this file runs in the browser,
+// where only NEXT_PUBLIC_* env variables exist
+const PaypalClientProvider = ({
+  clientId,
+  children,
+}: {
+  clientId: string | undefined;
+  children: ReactNode;
+}) => {
 
   // same rule as the server client in src/lib/paypal/client.ts, so both use one environment
   const environment =

@@ -62,10 +62,11 @@ const ProfileForm = ({ name, email }: ProfileFormProps) => {
           defaultValue={name}
           placeholder="enter your name"
           className="w-80"
+          autoComplete="name"
         />
       </div>
       <div className="form-group">
-        <Label htmlFor="Email">Email</Label>
+        <Label htmlFor="email">Email</Label>
         <Input
           type="email"
           id="email"
@@ -74,11 +75,12 @@ const ProfileForm = ({ name, email }: ProfileFormProps) => {
           placeholder="enter the email"
           defaultValue={email}
           className="w-80"
+          autoComplete="email"
         />
       </div>
       <div className="form-group">
         <Button variant="linkBtn" type="submit" disabled={isPending}>
-          {isPending ? "Uploading..." : "Update"}
+          {isPending ? "Upating..." : "Update"}
         </Button>
       </div>
     </form>

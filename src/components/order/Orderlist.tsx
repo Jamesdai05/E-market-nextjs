@@ -14,6 +14,7 @@ import { Button } from "../ui/button";
 import { formatPrice } from "@/utils/priceCaculation";
 import Emptylist from "../Emptylist/Emptylist";
 import { redirect } from "next/navigation";
+import NotYet from "./NotYet";
 
 
 
@@ -22,12 +23,14 @@ const Orderlist = async() => {
 
   const formatDate = (d: string | Date) => new Date(d).toISOString().slice(0, 10);
 
-  const NotYet = () => (
-      <CircleX className="h-4 w-4 text-red-500" aria-label="Not yet" />
-  );
+
 
   if (orders === null) redirect("/login");
-  if (orders.length === 0) return <Emptylist heading="You have no orders yet!" />;
+  if (orders.length === 0) return (
+    <div className="flex gap-2">
+      <Emptylist heading="You have no orders yet!" />
+      <Link href="/products"><span className="text-lg font-bold text-blue-300 underline hover:text-blue-400">Shop Now!</span></Link>
+  </div>);
 
   return (
       <>

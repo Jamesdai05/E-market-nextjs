@@ -5,6 +5,7 @@ import {
     usePayPal,
     INSTANCE_LOADING_STATE,
 } from "@paypal/react-paypal-js/sdk-v6";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { captureOrder, createPaypalOrder } from "@/utils/actions/paypal/actions"
 
@@ -15,6 +16,7 @@ type PayPalButtonProps = {
 
 const PayPalButton = ({ orderId }: PayPalButtonProps) => {
     const { loadingStatus, error } = usePayPal();
+    const router = useRouter();
 
     // SDK is still initializing
     if (loadingStatus === INSTANCE_LOADING_STATE.PENDING) {
@@ -49,14 +51,27 @@ const PayPalButton = ({ orderId }: PayPalButtonProps) => {
             }}
             onApprove={async (data) => {
                 try {
-                    await captureOrder(orderId, data.orderId);
+                    const { status } = await captureOrder(orderId, data.orderId);
                     // the action revalidates the page, so the badges update by themselves
-                    toast.success("Payment successful. Thank you for your order!");
+                    if (status === "paid") {
+                        toast.success("Payment successful. Thank you for your order!");
+                    } else if (status === "pending") {
+                        toast.info(
+                            "PayPal is still processing your payment. We'll update your order once it's confirmed.",
+                        );
+                    } else {
+                        toast.error(
+                            "PayPal declined the payment. Please try again or use another payment method.",
+                        );
+                    }
                 } catch (e) {
                     console.error("PayPal capture failed", e);
                     toast.error(
                         "We couldn't confirm your payment. If you were charged, please contact us.",
                     );
+                    // the action threw before revalidating, so reload the order
+                    // to show its new state (e.g. "under review" in place of this button)
+                    router.refresh();
                 }
             }}
             onCancel={() => {

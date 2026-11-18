@@ -30,7 +30,7 @@ const navLinkActiveClass = "bg-nav-accent text-nav-foreground";
 
 const authButtonClass = cn(
     buttonVariants({ variant: "outline" }),
-    "bg-nav text-nav-foreground border-nav-foreground/50 hover:bg-nav-foreground hover:text-nav",
+    "bg-nav text-background border-nav-foreground/50 hover:bg-nav-foreground hover:text-nav",
 );
 
 export type NavbarUser = {
