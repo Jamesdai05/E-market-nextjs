@@ -9,8 +9,8 @@ const ProfilePage = async () => {
     return (
         <div className="flex flex-col gap-4 max-w-7xl mx-auto">
             <SectionTitle text={"profile & orders"} />
-            <div className="flex flex-col w-280 mx-auto items-start">
-                <div className="grid md:grid-cols-12 gap-6 w-full px-8 py-10">
+            <div className="flex flex-col mx-auto items-start justify-center">
+                <div className="grid md:grid-cols-12 gap-8 w-full py-10">
                     <div className="md:col-span-5">
                         <Suspense fallback={<Loader />}>
                             <ProfileSection />
